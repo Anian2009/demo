@@ -42,12 +42,12 @@ public class AdminController {
                     Double.parseDouble(body.get("newUpgrade")),
                     Double.parseDouble(body.get("newMining")),
                     body.get("image"));
-            fabricsRepository.save(fabric);
+            response.put("message",fabricsRepository.save(fabric));
         }catch (NullPointerException ex){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Lack of transmitted data to create an object.");
         }
-        response.put("message", "OK");
+
         return response;
     }
 }

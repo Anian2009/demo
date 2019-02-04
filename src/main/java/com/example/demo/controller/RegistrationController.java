@@ -48,30 +48,10 @@ public class RegistrationController extends UserFromSecurity {
     }
 
     @PostMapping(value = {"/api/guest/log-in","/api/admin/log-in"})
-    public ResponseEntity<Map<String, Object>> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse/*, @RequestBody Map<String, String> body*/){
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+    public ResponseEntity<Map<String, Object>> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse){
         Map<String, Object> response = new HashMap<>();
-//        Users user = usersRepository.findByEmail(body.get("email"));
-//        if (user == null){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                    "User with this email not found in DB.");
-//        }
-//        if (!Boolean.valueOf(user.getActivationCode())){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//                    "User has not completed registration. Check your email and follow the instructions.");
-//        }
-//        try {
-//            if (!bCryptPasswordEncoder.matches(body.get("password"),user.getPassword())){
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//                        "Password is incorrect.");
-//            }
-//        }catch (NullPointerException ex){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//                    "The user did not provide enough information to identify.");
-//        }
 
         Users user = getUser(httpRequest,httpResponse);
-
 
         response.put("message", user.getToken());
         response.put("role", user.getUserRole());

@@ -8,8 +8,6 @@ import org.pac4j.core.credentials.UsernamePasswordCredentials;
 import org.pac4j.core.credentials.authenticator.Authenticator;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.util.CommonHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,8 +19,6 @@ public class NamePasswordAuthenticator implements Authenticator<UsernamePassword
     public NamePasswordAuthenticator(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(NamePasswordAuthenticator.class);
 
     @Override
     public void validate(UsernamePasswordCredentials credentials, WebContext webContext) {

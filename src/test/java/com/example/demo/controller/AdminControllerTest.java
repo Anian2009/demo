@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.profile.ReadFromFile;
 import com.example.demo.controller.profile.TakeInputDataForTest;
+import com.example.demo.domain.Fabrics;
 import com.example.demo.domain.Users;
 import com.example.demo.repository.FabricsRepository;
 import com.example.demo.repository.UsersRepository;
@@ -23,8 +24,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @ActiveProfiles("adminControllerMockProfile")
 @RunWith(SpringRunner.class)
@@ -60,52 +66,78 @@ public class AdminControllerTest extends ReadFromFile {
     @Test
     public void factoryMarketListAllIsOkExpectedOk() throws IOException, JSONException {
 
-        Mockito.when(usersRepository.findByToken("admin-token")).thenReturn(userForTest);
-        Mockito.when(fabricsRepository.findAll()).thenReturn(TakeInputDataForTest.fabricList());
+        List<Fabrics> fabrics = Arrays.asList(
+                new Fabrics(1.0,"firstFabric",3.0,0.00001,"image-1"),
+                new Fabrics(5.0,"secondFabric",15.0,0.00006,"image-2"),
+                new Fabrics(10.0,"threadFabric",30.0,0.00015,"image-3"),
+                new Fabrics(50.0,"forthFabric",150.0,0.0008,"image-4")
+        );
+
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(userForTest);
+        Mockito.when(fabricsRepository.findAll()).thenReturn(fabrics);
 
         ResponseEntity<String> response = rest.exchange("/api/admin/factory-list", HttpMethod.GET,
                 new HttpEntity<String>(headers), String.class);
+
+        verify(usersRepository).findByToken("admin-token");
+        verify(fabricsRepository).findAll();
+        verifyNoMoreInteractions(usersRepository);
+        verifyNoMoreInteractions(fabricsRepository);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         JSONAssert.assertEquals(readFromFile("responseToFactoryMarketList.json"), response.getBody(), false);
     }
 
     @Test
-    public void tryAddFabricEverythingIsOkExpectedOk() throws JSONException, JsonProcessingException {
+    public void tryAddFabricEverythingIsOkExpectedOk() throws JSONException{
 
         Map<String,String> request = new HashMap<>();
-        request.put("newPrice","1");
+        request.put("newPrice","1.0");
         request.put("newName","SomeName");
-        request.put("newUpgrade","1");
-        request.put("newMining","1");
-        request.put("image","../immage/fab_none-13.jpg");
+        request.put("newUpgrade","1.0");
+        request.put("newMining","1.0");
+        request.put("image","image");
 
+        Fabrics fabric = new Fabrics(1.0,"SomeName",1.0,1.0,"image");
 
-        Mockito.when(usersRepository.findByToken("admin-token")).thenReturn(userForTest);
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(userForTest);
+        Mockito.when(fabricsRepository.save(any())).thenReturn(fabric);
 
         ResponseEntity<String> response = rest.exchange("/api/admin/add-factory", HttpMethod.POST,
                 new HttpEntity<>(request,headers), String.class);
 
+        verify(usersRepository).findByToken("admin-token");
+        verifyNoMoreInteractions(usersRepository);
+        verify(fabricsRepository).save(any());
+        verifyNoMoreInteractions(fabricsRepository);
+
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":\"OK\"}", response.getBody(), false);
+        JSONAssert.assertEquals("{\"message\":{\"id\":null,\"price\":1.0,\"fabricName\":\"SomeName\"," +
+                "\"upgrade\":1.0,\"miningPerSecond\":1.0,\"img\":\"image\"}}", response.getBody(), false);
     }
 
     @Test
-    public void tryAddFabricWithoutDataExpectedBadRequest() throws JSONException {
-
-        Mockito.when(usersRepository.findByToken("admin-token")).thenReturn(userForTest);
+    public void tryAddFabricWithoutDataExpectedBadRequest() throws JSONException{
 
         Map<String,String> request = new HashMap<>();
         request.put("newPrice","1");
         request.put("newName","SomeName");
         request.put("newUpgrade",null);//NullPointerException generated
         request.put("newMining","1");
-        request.put("image","../immage/fab_none-13.jpg");
+        request.put("image","image");
+
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(userForTest);
+        Mockito.when(fabricsRepository.save(any())).thenReturn(any());
 
         ResponseEntity<String> response = rest.exchange("/api/admin/add-factory", HttpMethod.POST,
                 new HttpEntity<>(request,headers), String.class);
 
+        verify(usersRepository).findByToken("admin-token");
+        verifyNoMoreInteractions(usersRepository);
+        verify(fabricsRepository, times(0)).save(any());
+
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":\"Lack of transmitted data to create an object.\"}", response.getBody(), false);
+        JSONAssert.assertEquals("{\"message\":\"Lack of transmitted data to create an object.\"}",
+                response.getBody(), false);
     }
 }
