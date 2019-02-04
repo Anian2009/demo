@@ -1,0 +1,8 @@
+{
+    "rateSilver":200,
+    "role":"USER",
+    "rateGold":100,
+    "price":2000,
+    "message":"user-token",
+    "email":"SomeUser@some.net"
+  }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oligarch</title>
+
+    <script language="JavaScript" type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/buyFabric.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/main-1.js"></script>
+</head>
+<body background="../immage/main_fon22.gif">
+<!-- \/ \/ \/ \/ \/ Navigation bar \/ \/ \/ \/ \/ -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">"Oligarch"</a>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Main page</a>
+            </li>
+        </ul>
+        <span class="navbar-text mr-3">Welcome to the game</span>
+        <button id="logOut" type="button" class="btn btn-outline-light">Log out</button>
+    </div>
+</nav>
+<!-- /\ /\ /\ /\ /\ Navigation bar /\ /\ /\ /\ /\  -->
+<p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" align="justify">
+                <hr>
+                <h4>
+                    <div align="center">Leader list</div>
+                </h4>
+                <hr>
+                <ol id="usersList">
+                </ol>
+            </div>
+            <div class="col-7">
+                <!--Fabrics-->
+                <div class="container" align="center">
+                    <div class="table-responsive" align="center">
+                        <h3 align="center">Fabrics ich you can bay</h3>
+                        <table class="table table-bordered table-striped" id="factoriesToBuy" align="center">
+                            <tr>
+                                <th align="center">Factory name</th>
+                                <th align="center">Price</th>
+                                <th align="center">Upgrade costs</th>
+                                <th align="center">Mining per second</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--Fabrics-->
+            </div>
+            <div class="col">
+                <hr>
+                <h3 id="userName">name</h3>
+                <div id="silverBal">silver balance</div>
+                <div id="goldBal">gold balance</div>
+                <div id="increase">per second</div>
+                <hr>
+<p><a href="dashboard.html" class="badge badge-primary">Main page</a></p>
+<hr>
+</body>
+</html>

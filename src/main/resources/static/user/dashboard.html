@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oligarch</title>
+    <script language="JavaScript" type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/main.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/main-1.js"></script>
+
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+
+</head>
+<body background="../immage/main_fon22.gif">
+<!-- \/ \/ \/ \/ \/ Navigation bar \/ \/ \/ \/ \/ -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">"Oligarch"</a>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="buyFabric.html">Buy fabric</a>
+            </li>
+        </ul>
+        <span class="navbar-text mr-3">Welcome to the game</span>
+        <button id="logOut" type="button" class="btn btn-outline-light">Log out</button>
+    </div>
+</nav>
+<!-- /\ /\ /\ /\ /\ Navigation bar /\ /\ /\ /\ /\  -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col" align="justify">
+            <hr>
+            <h4>
+                <div align="center">Leader list</div>
+            </h4>
+            <hr>
+            <ol id="usersList">
+            </ol>
+        </div>
+        <div class="col-7">
+            <!--cards-->
+            <p>
+            <h3 align="center">Your own factories</h3>
+            <h5 align="center"><font color="#a9a9a9">This is the main page. All information about your company and
+                factories will be here.</font></h5>
+            <p>
+            <div class="card-columns" id="user-card"></div>
+            <!--cards-->
+        </div>
+        <div class="col">
+            <hr>
+            <h3 id="userName">name</h3>
+            <div id="silverBal">silver balance</div>
+            <div id="goldBal">gold balance</div>
+            <div id="increase">per second</div>
+            <hr>
+            <p><a href="buyFabric.html" class="badge badge-primary">Buy fabric</a></p>
+            <p><a href="#" id="customButton" class="badge badge-primary">Buy gold status</a></p>
+            <!--Payment card-->
+            <p><a href="#" id="exchange_link" class="badge badge-primary" data-toggle="modal"
+                  data-target="#currency_exchange">Сurrency exchange</a></p>
+            <hr>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="currency_exchange" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" align="center">CURRENCY EXCHANGE OFFICE</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- ..... -->
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Sell gold
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <!--Sell gold block-->
+                                <div>
+                                    <label>gold coins</label>
+                                    <input id="goldSellGold" type="number" min="0" step="1" class="form-control"/>
+                                </div>
+                                <p/>
+                                <div>
+                                    <label>silver coins</label>
+                                    <input id="silverSellGold" type="text" class="form-control "/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="exchangeSellGold">Make exchange</button>
+                                </div>
+                                <!--Sell gold block-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Buy gold
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <!--Buy gold block-->
+                                <div>
+                                    <label>silver coins</label>
+                                    <input id="silverBuyGold" type="number" min="0" step="100" class="form-control"/>
+                                </div>
+                                <p/>
+                                <div>
+                                    <label>gold coins</label>
+                                    <input id="goldBuyGold" type="text" class="form-control "/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="exchangeBuyGold">Make exchange</button>
+                                </div>
+                                <!--Buy gold block-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ..... -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
