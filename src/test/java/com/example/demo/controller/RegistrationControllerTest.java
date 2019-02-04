@@ -74,7 +74,7 @@ public class RegistrationControllerTest extends ReadFromFile {
                 HttpMethod.POST, new HttpEntity<>(request, null), String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToLogin.txt"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("responseToLogin.json"), response.getBody(), false);
     }
 
     @Test

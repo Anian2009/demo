@@ -7,7 +7,6 @@ import com.example.demo.repository.FabricsRepository;
 import com.example.demo.repository.UserFabricsRepository;
 import com.example.demo.repository.UsersRepository;
 import com.example.demo.security.Pac4jConfig;
-import com.stripe.model.Charge;
 import junit.framework.Assert;
 import org.json.JSONException;
 import org.junit.Before;
@@ -83,7 +82,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToMyFabricList.txt"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("responseToMyFabricList.json"), response.getBody(), false);
     }
 
     @Test
@@ -107,7 +106,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToFactoryMarketList.txt"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("responseToFactoryMarketList.json"), response.getBody(), false);
 
     }
 
@@ -176,7 +175,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToUpgradeFabric.txt"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("responseToUpgradeFabric.json"), response.getBody(), false);
     }
 
     @Test

@@ -29,17 +29,19 @@ public class Pac4jConfig {
 
         Config config = new Config(headerClient);
         config.addAuthorizer(RoleType.ADMIN.toString(), new RequireAnyRoleAuthorizer(RoleType.ADMIN.toString()));
+//        config.addAuthorizer(RoleType.ADMIN.toString(), new RequireAnyRoleAuthorizer(RoleType.USER.toString()));
         config.addAuthorizer(RoleType.USER.toString(), new RequireAnyRoleAuthorizer(RoleType.USER.toString()));
         return config;
     }
 
-//    @Bean
-//    public Config configNamePassword() {
-//        DirectBasicAuthClient directBasicAuthClient = new DirectBasicAuthClient(new NamePasswordAuthenticator(usersRepository));
-//
-//        Config config = new Config(directBasicAuthClient);
-//        config.addAuthorizer(RoleType.USER.toString(), new RequireAnyRoleAuthorizer(RoleType.USER.toString()));
-//        config.addAuthorizer(RoleType.ADMIN.toString(), new RequireAnyRoleAuthorizer(RoleType.ADMIN.toString()));
-//        return config;
-//    }
+    @Bean
+    public Config configNamePassword() {
+        DirectBasicAuthClient directBasicAuthClient = new DirectBasicAuthClient(new NamePasswordAuthenticator(usersRepository));
+
+        Config config = new Config(directBasicAuthClient);
+        config.addAuthorizer(RoleType.USER.toString(), new RequireAnyRoleAuthorizer(RoleType.USER.toString()));
+//        config.addAuthorizer(RoleType.ADMIN.toString(), new RequireAnyRoleAuthorizer(RoleType.ADMIN.toString(),RoleType.USER.toString()));
+//        config.addAuthorizer(RoleType.ADMIN.toString(), new RequireAnyRoleAuthorizer(RoleType.USER.toString()));
+        return config;
+    }
 }

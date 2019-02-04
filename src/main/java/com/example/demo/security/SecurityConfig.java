@@ -23,6 +23,6 @@ public class SecurityConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SecurityInterceptor(config, "HeaderClient", RoleType.USER.toString())).addPathPatterns("/api/user/*");
         registry.addInterceptor(new SecurityInterceptor(config, "HeaderClient", RoleType.ADMIN.toString())).addPathPatterns("/api/admin/*");
-        //registry.addInterceptor(new SecurityInterceptor(configNamePassword, "DirectBasicAuthClient", RoleType.ADMIN.toString())).addPathPatterns("/api/guest/log-in");
+        registry.addInterceptor(new SecurityInterceptor(configNamePassword, "DirectBasicAuthClient", RoleType.USER.toString())).addPathPatterns("/api/guest/log-in*");
     }
 }

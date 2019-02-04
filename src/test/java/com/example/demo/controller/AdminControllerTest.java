@@ -67,7 +67,7 @@ public class AdminControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToFactoryMarketList.txt"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("responseToFactoryMarketList.json"), response.getBody(), false);
     }
 
     @Test
@@ -80,10 +80,6 @@ public class AdminControllerTest extends ReadFromFile {
         request.put("newMining","1");
         request.put("image","../immage/fab_none-13.jpg");
 
-
-//        ObjectMapper mapperObj = new ObjectMapper();
-//        String jsonStr = mapperObj.writeValueAsString(request);
-//        System.out.println(jsonStr);
 
         Mockito.when(usersRepository.findByToken("admin-token")).thenReturn(userForTest);
 

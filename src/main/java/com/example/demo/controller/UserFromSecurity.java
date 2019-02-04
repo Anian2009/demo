@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserFromSecurity  {
+public abstract class UserFromSecurity  {
 
     public Users getUser(ServletRequest servletRequest, ServletResponse servletResponse){
         final HttpServletRequest request = (HttpServletRequest) servletRequest;

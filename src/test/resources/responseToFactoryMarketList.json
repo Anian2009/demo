@@ -4,8 +4,7 @@
             {
                 "id":null,
                 "price":1.0,
-                "fabricName":
-                "firstFabric",
+                "fabricName":"firstFabric",
                 "upgrade":3.0,
                 "miningPerSecond":1.0E-5,
                 "img":"image-1"
