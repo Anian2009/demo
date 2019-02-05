@@ -92,12 +92,14 @@ public class DashboardController extends UserFromSecurity{
         }
         else {
             UserFabrics userFabric = new UserFabrics(user, fabric, fabric.getMiningPerSecond());
-            userFabricsRepository.save(userFabric);
+            response.put("userFabric",
+                    userFabricsRepository.save(userFabric));
             user.setIncrease(user.getIncrease() + fabric.getMiningPerSecond());
             user.setSilverBalance(user.getSilverBalance() - fabric.getPrice());
-            usersRepository.save(user);
+            response.put("user",
+                    usersRepository.save(user));
         }
-        response.put("message", "OK");
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -154,6 +156,7 @@ public class DashboardController extends UserFromSecurity{
 
     @GetMapping("api/user/exchange")
     public ResponseEntity<Map<String, Object>> exchangeGold(HttpServletRequest httpRequest, HttpServletResponse httpResponse,@RequestParam Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
         double mySilverCoins = Double.parseDouble(request.get("mySilverCoins").toString());
         double myGoldCoins = Double.parseDouble(request.get("myGoldCoins").toString());
         Users user = getUser(httpRequest,httpResponse);
@@ -164,8 +167,8 @@ public class DashboardController extends UserFromSecurity{
             }else{
                 user.setGoldBalance(user.getGoldBalance() + myGoldCoins);
                 user.setSilverBalance(user.getSilverBalance() + (Math.abs(myGoldCoins)*rateGold));
-                usersRepository.save(user);
-                return new ResponseEntity<>(HttpStatus.OK);
+                response.put("user",usersRepository.save(user));
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
 
         }else{
@@ -175,8 +178,8 @@ public class DashboardController extends UserFromSecurity{
             }else{
                 user.setGoldBalance(user.getGoldBalance() + (Math.abs(mySilverCoins)/rateSilver));
                 user.setSilverBalance(user.getSilverBalance() + mySilverCoins);
-                usersRepository.save(user);
-                return new ResponseEntity<>(HttpStatus.OK);
+                response.put("user",usersRepository.save(user));
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
         }
     }

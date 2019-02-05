@@ -87,7 +87,6 @@ public class RegistrationController extends UserFromSecurity {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         body.get("email")+" - Account was suspended due to inactivity");
             }
-
             Users user = new Users(
                     body.get("name"),
                     body.get("email").toLowerCase(),
@@ -95,9 +94,9 @@ public class RegistrationController extends UserFromSecurity {
                     bCryptPasswordEncoder.encode(body.get("password")),
                     md5Hex(body.get("password") + body.get("name")));
             user.setActivationCode(activationCode);
-            usersRepository.save(user);
 
-            response.put("name", body.get("name"));
+            Users userFromRepo = usersRepository.save(user);
+            response.put("user",userFromRepo.getName()  );
             return new ResponseEntity<>(response,HttpStatus.OK);
         } else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -111,8 +110,7 @@ public class RegistrationController extends UserFromSecurity {
         Users user = usersRepository.findByActivationCode(code);
         if (user != null) {
             user.setActivationCode("true");
-            usersRepository.save(user);
-            response.put("message","OK");
+            response.put("message",usersRepository.save(user));
             return new ResponseEntity<>(response,HttpStatus.OK);
         }else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,

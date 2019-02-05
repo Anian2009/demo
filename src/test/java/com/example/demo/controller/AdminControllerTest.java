@@ -1,13 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.profile.ReadFromFile;
-import com.example.demo.controller.profile.TakeInputDataForTest;
 import com.example.demo.domain.Fabrics;
 import com.example.demo.domain.Users;
 import com.example.demo.repository.FabricsRepository;
 import com.example.demo.repository.UsersRepository;
 import com.example.demo.security.Pac4jConfig;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import junit.framework.Assert;
 import org.json.JSONException;
 import org.junit.Before;
@@ -24,7 +22,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -127,7 +128,6 @@ public class AdminControllerTest extends ReadFromFile {
         request.put("image","image");
 
         Mockito.when(usersRepository.findByToken(anyString())).thenReturn(userForTest);
-        Mockito.when(fabricsRepository.save(any())).thenReturn(any());
 
         ResponseEntity<String> response = rest.exchange("/api/admin/add-factory", HttpMethod.POST,
                 new HttpEntity<>(request,headers), String.class);

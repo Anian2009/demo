@@ -15,7 +15,7 @@ public class MailSender {
     private String username;
 
 
-    public void send(String emailTo, String subject, String message) {
+    public String send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setFrom(username);
@@ -23,7 +23,7 @@ public class MailSender {
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
 
-
         mailSender.send(mailMessage);
+        return "send";
     }
 }
