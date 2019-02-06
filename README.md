@@ -1,12 +1,14 @@
 #**APIdoc for Oligarch**
 ***
-AdminController
+For admin account
 ---------------------------
 ***
 - ###The whole list of factories
+
 GET `api/admin/factory-list`
 
-    headers: {token : "admin-token"}
+    headers: key = "token"
+             value = "admin-token"
 
 Response 200
 
@@ -47,17 +49,19 @@ Response 200
       ]
     }
 
-- ### Create a new factory
+- ### Create a new factory  
+
 POST `api/admin/add-factory`
 
-    headers: {token : "admin-token"}
-    data: JSON.stringify({
-                    newPrice: "10",
-                    newName: "Microsoft corp",
-                    newUpgrade: "30",
-                    newMining: "0.005",
-                    image: "../image/image-8",
-                }),
+    headers: key = "token"
+             value = "admin-token"
+             
+    data:    key = "newPrice"   value = "10",
+             key = "newPrice"   value = "10",
+             key = "newName"    value = "Microsoft corp",
+             key = "newUpgrade" value = "30",
+             key = "newMining"  value = "0.005",
+             key = "image"      value = "../image/image-8",
                 
 Response 200
 
@@ -81,14 +85,19 @@ Response 400 - When enough data is not transmitted to create a new object.
       "message": "Lack of transmitted data to create an object.",
       "path": "/api/admin/add-factory"
     }
+    
 ***
-DashboardController
----------------------------
+
+  For user account
+  ---------------------------
+  
 ***
-- ###Get information for the main page: `"user"` - to output your own data; `"users"` - to form a board of leaders, `"fabrics"` - for the withdrawal of their own factories.
+- ### Get information for the main page: `"user"` - to output your own data; `"users"` - to form a board of leaders, `"fabrics"` - for the withdrawal of their own factories.
+
 GET `api/user/dashboard`
 
-    headers: {token : "user-token"}
+    headers: key = "token"
+             value = "user-token"
 
 Response 200
 
