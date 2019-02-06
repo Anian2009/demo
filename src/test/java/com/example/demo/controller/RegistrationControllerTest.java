@@ -79,62 +79,6 @@ public class RegistrationControllerTest extends ReadFromFile {
     }
 
     @Test
-    public void tryLoginWithoutActivationByCodeExpectedBadRequest() throws JSONException {
-
-        userForTest.setActivationCode("The user has not passed the activation code");//Not activated
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth("SomeUser@some.net","somePassword");
-
-        Mockito.when(usersRepository.findByEmail(anyString())).thenReturn(userForTest);
-
-        ResponseEntity<String> response = rest.exchange("/api/guest/log-in",
-                HttpMethod.POST, new HttpEntity<>(headers), String.class);
-
-        verify(usersRepository, times(1)).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":\"User has not completed registration." +
-                " Check your email and follow the instructions.\"}", response.getBody(), false);
-    }
-
-    @Test
-    public void tryLoginWithAnUnregisteredEmailExpectedNotFound() throws JSONException {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth("SomeUser@some.net","somePassword");
-
-        Mockito.when(usersRepository.findByEmail(anyString())).thenReturn(null);
-
-        ResponseEntity<String> response = rest.exchange("/api/guest/log-in", HttpMethod.POST,
-                new HttpEntity<>(headers), String.class);
-
-        verify(usersRepository, times(1)).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":\"User with this email not found in DB.\"}",
-                response.getBody(), false);
-    }
-
-    @Test
-    public void tryLoginWithWrongPasswordExpectedBadRequest() throws JSONException {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth("SomeUser@some.net","someWrongPassword");
-
-        Mockito.when(usersRepository.findByEmail(anyString())).thenReturn(userForTest);
-
-        ResponseEntity<String> response = rest.exchange("/api/guest/log-in", HttpMethod.POST,
-                new HttpEntity<>(headers), String.class);
-
-        verify(usersRepository, times(1)).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":\"Wrong password.\"}",
-                response.getBody(), false);
-    }
-
-    @Test
     public void registrationEverythingIsOkExpectedOk() throws JSONException {
 
         Map<String, String> request = new HashMap<>();
