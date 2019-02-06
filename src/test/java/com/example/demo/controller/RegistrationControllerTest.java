@@ -5,6 +5,7 @@ import com.example.demo.domain.Users;
 import com.example.demo.repository.UsersRepository;
 import com.example.demo.service.MailSender;
 import org.json.JSONException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,11 +60,16 @@ public class RegistrationControllerTest extends ReadFromFile {
         userForTest.setActivationCode("true");
     }
 
+    @After
+    public void check() {
+        verifyNoMoreInteractions(usersRepository);
+        verifyNoMoreInteractions(mailSender);
+    }
+
     private Users userForTest;
 
     @Test
-    public void loginAllIsOkExpectedOk() throws JSONException, IOException {
-
+    public void login() throws JSONException, IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth("SomeUser@some.net","somePassword");
 
@@ -72,15 +78,15 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/api/guest/log-in",
                 HttpMethod.POST, new HttpEntity<>(headers), String.class);
 
-        verify(usersRepository, times(1)).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         JSONAssert.assertEquals(readFromFile("responseToLogin.json"), response.getBody(), false);
+
+        verify(usersRepository).findByEmail("SomeUser@some.net");
+        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
-    public void registrationEverythingIsOkExpectedOk() throws JSONException {
-
+    public void registration() throws JSONException {
         Map<String, String> request = new HashMap<>();
         request.put("name", "SomeName");
         request.put("email", "SomeUser@some.net");
@@ -93,19 +99,19 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/api/guest/registration", HttpMethod.POST,
                 new HttpEntity<>(request, null), String.class);
 
-        verify(usersRepository, times(1)).findByEmail("SomeUser@some.net");
-        verify(mailSender, times(1)).send(eq("SomeUser@some.net"),eq("Activation code"),anyString());
-        verify(usersRepository, times(1)).save(any());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        JSONAssert.assertEquals("{\"message\":\"A message was sent to your email with further instructions\"}",
+                response.getBody(), false);
+
+        verify(usersRepository).findByEmail("SomeUser@some.net");
+        verify(mailSender).send(eq("SomeUser@some.net"),eq("Activation code"),anyString());
+        verify(usersRepository).save(any());
         verifyNoMoreInteractions(usersRepository);
         verifyNoMoreInteractions(mailSender);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals("{\"user\":"+userForTest.getName()+"}",
-                response.getBody(), false);
     }
 
     @Test
-    public void tryToRegistrationWithNotValidEmailExpectedBadRequest() throws JSONException {
-
+    public void tryToRegistrationWithNotValidEmail() throws JSONException {
         Map<String, String> request = new HashMap<>();
         request.put("name", "SomeName");
         request.put("email", "SomeUser@some");//Invalid Email
@@ -114,16 +120,16 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/api/guest/registration", HttpMethod.POST,
                 new HttpEntity<>(request, null), String.class);
 
-        verifyZeroInteractions(usersRepository);
-        verifyZeroInteractions(mailSender);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         JSONAssert.assertEquals("{\"message\":\"E-mail incorrectly written.\"}",
                 response.getBody(), false);
+
+        verifyZeroInteractions(usersRepository);
+        verifyZeroInteractions(mailSender);
     }
 
     @Test
-    public void tryToRegistrationWithEmailAlreadyExistExpectedBadRequest() throws JSONException {
-
+    public void tryToRegistrationWithEmailAlreadyExist() throws JSONException {
         Map<String, String> request = new HashMap<>();
         request.put("name", "SomeName");
         request.put("email", "SomeUser@some.net");
@@ -134,17 +140,17 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/api/guest/registration", HttpMethod.POST,
                 new HttpEntity<>(request, null), String.class);
 
-        verify(usersRepository, times(1)).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
-        verifyZeroInteractions(mailSender);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         JSONAssert.assertEquals("{\"message\":\"A user with such an email already exists.\"}",
                 response.getBody(), false);
+
+        verify(usersRepository).findByEmail("SomeUser@some.net");
+        verifyNoMoreInteractions(usersRepository);
+        verifyZeroInteractions(mailSender);
     }
 
     @Test
-    public void activationCodeEverythingIsOkExpectedOk() throws JSONException {
-
+    public void activateCode() throws JSONException {
         userForTest.setActivationCode("SomeCode");
         userForTest.setPassword("somePassword");
 
@@ -154,19 +160,17 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/activation-code/SomeCode", HttpMethod.PUT,
                 new HttpEntity<>(null), String.class);
 
-        verify(usersRepository, times(1)).findByActivationCode("SomeCode");
-        verify(usersRepository, times(1)).save(any());
-        verifyNoMoreInteractions(usersRepository);
-
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":{\"id\":null,\"name\":\"SomeUser\"," +
-                "\"silverBalance\":0.0,\"goldBalance\":0.0,\"increase\":1.0E-5}}",
-                response.getBody(), false);
+        JSONAssert.assertEquals("{\"message\":\"Activation completed successfully. " +
+                        "You can enter the game using your email address and password\"}", response.getBody(), false);
+
+        verify(usersRepository).findByActivationCode("SomeCode");
+        verify(usersRepository).save(any());
+        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
-    public void tryActivationCodeWithWrongCodeExpectedNotFound() throws JSONException {
-
+    public void tryActivateCodeWithWrongCode() throws JSONException {
         userForTest.setActivationCode("SomeCode");
 
         Mockito.when(usersRepository.findByActivationCode(anyString())).thenReturn(null);
@@ -174,19 +178,16 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/activation-code/SomeElseCode",//Wrong code
                 HttpMethod.PUT, new HttpEntity<>(null), String.class);
 
-        verify(usersRepository, times(1)).findByActivationCode("SomeElseCode");
-        verifyNoMoreInteractions(usersRepository);
-
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         JSONAssert.assertEquals("{\"message\":\"A user with such an activation key was not found in the database.\"}",
                 response.getBody(), false);
 
-
+        verify(usersRepository).findByActivationCode("SomeElseCode");
+        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
-    public void tryToReactivateTheCodeExpectedNotFound() throws JSONException {
-
+    public void tryToReactivateTheCode() throws JSONException {
         userForTest.setActivationCode("true");
 
         Mockito.when(usersRepository.findByActivationCode(anyString())).thenReturn(null);
@@ -194,13 +195,11 @@ public class RegistrationControllerTest extends ReadFromFile {
         ResponseEntity<String> response = rest.exchange("/activation-code/SomeCode",//This code is no longer valid
                 HttpMethod.PUT, new HttpEntity<>(null), String.class);
 
-        verify(usersRepository, times(1)).findByActivationCode("SomeCode");
-        verifyNoMoreInteractions(usersRepository);
-
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         JSONAssert.assertEquals("{\"message\":\"A user with such an activation key was not found in the database.\"}",
                 response.getBody(), false);
 
-
+        verify(usersRepository).findByActivationCode("SomeCode");
+        verifyNoMoreInteractions(usersRepository);
     }
 }

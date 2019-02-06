@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class DashboardController extends UserFromSecurity{
+public class DashboardController extends SpecialTasks {
 
     @Value("${stripe.apiKey}")
     private String myApiKey;
@@ -57,15 +57,22 @@ public class DashboardController extends UserFromSecurity{
     }
 
     @GetMapping("api/user/dashboard")
-    public ResponseEntity<Map<String, Object>> myFabric(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+    public ResponseEntity<Map<String, Object>> dashboardInformation(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         Map<String, Object> response = new HashMap<>();
-        Users user = getUser(httpRequest,httpResponse);
-        List<UserFabrics> fabrics = userFabricsRepository.findByMaster(user);
+        Users user = getUser(httpRequest, httpResponse);
         List<Users> users;
         (users = usersRepository.findAll()).sort((o1, o2) -> o2.getTotalBalance().compareTo(o1.getTotalBalance()));
-        response.put("fabrics", fabrics);
         response.put("user", user);
         response.put("users", users);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("api/user/myFabric")
+    public ResponseEntity<Map<String, Object>> myFabric(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        Map<String, Object> response = new HashMap<>();
+        Users user = getUser(httpRequest, httpResponse);
+        List<UserFabrics> fabrics = userFabricsRepository.findByMaster(user.getId());
+        response.put("fabrics", fabrics);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -78,56 +85,55 @@ public class DashboardController extends UserFromSecurity{
     }
 
     @PostMapping("api/user/buy-factory")
-    public ResponseEntity<Map<String, Object>> bayFabric(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @RequestBody Map<String,Object> body) {
+    public ResponseEntity<Map<String, Object>> bayFabric(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                                         @RequestBody Map<String, Object> body) {
         Map<String, Object> response = new HashMap<>();
-        Users user = getUser(httpRequest,httpResponse);
+        Users user = getUser(httpRequest, httpResponse);
         Fabrics fabric = fabricsRepository.findById(Integer.parseInt(body.get("id").toString()));
-        if (fabric == null){
+        if (fabric == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Such a plant does not exist in the database.");
         }
-        if (user.getSilverBalance() < fabric.getPrice()){
+        if (user.getSilverBalance() < fabric.getPrice()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "The user lacks money.");
-        }
-        else {
-            UserFabrics userFabric = new UserFabrics(user, fabric, fabric.getMiningPerSecond());
-            response.put("userFabric",
-                    userFabricsRepository.save(userFabric));
+        } else {
+            UserFabrics userFabric = new UserFabrics(user.getId(), fabric.getId(), fabric.getMiningPerSecond(),
+                    fabric.getFabricName(), fabric.getImg(), fabric.getUpgrade());
+            userFabricsRepository.save(userFabric);
             user.setIncrease(user.getIncrease() + fabric.getMiningPerSecond());
             user.setSilverBalance(user.getSilverBalance() - fabric.getPrice());
-            response.put("user",
-                    usersRepository.save(user));
+            usersRepository.save(user);
+            response.put("message", "Congratulations! You have become the owner of a new plant. Information about your " +
+                    "factories is on the main page.");
         }
-
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("api/user/upgrade-factory/{id}")
-    public ResponseEntity<Map<String, Object>> upgrade(@PathVariable Integer id) {
+    public ResponseEntity<Map<String, Object>> upgrade(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @PathVariable Integer id) {
         Map<String, Object> response = new HashMap<>();
         UserFabrics fabric = userFabricsRepository.findById(id);
 
         try {
-            Users user = fabric.getMaster();
-            if (user.getSilverBalance() < fabric.getFabric().getUpgrade()){
+            Users user = getUser(httpRequest, httpResponse);
+            if (user.getSilverBalance() < fabric.getUpgrade()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have enough money to complete the operation.");
-            }
-            else {
-                userFabricsRepository.save(fabric.update());
-                List<UserFabrics> fabrics = userFabricsRepository.findByMaster(user);
+            } else {
+                update(fabric, user);
+                List<UserFabrics> fabrics = userFabricsRepository.findByMaster(user.getId());
                 response.put("fabrics", fabrics);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Such a user does not exist in the database.");
         }
     }
 
     @GetMapping("api/user/buy-gold-status")
-    public ResponseEntity<Map<String, Object>> buyGoldStatus(HttpServletRequest httpRequest, HttpServletResponse httpResponse,@RequestParam Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> buyGoldStatus(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @RequestParam Map<String, Object> request) {
         Map<String, Object> response = new HashMap<>();
         Stripe.apiKey = myApiKey;
         String token = request.get("stripeToken").toString();
@@ -139,46 +145,44 @@ public class DashboardController extends UserFromSecurity{
         try {
             Charge charge = Charge.create(params);
             if (charge.getStatus().equals("succeeded")) {
-                Users user = getUser(httpRequest,httpResponse);
+                Users user = getUser(httpRequest, httpResponse);
                 usersRepository.save(user.changeStatus());
                 response.put("message", "Ok");
                 return new ResponseEntity<>(response, HttpStatus.OK);
-            } else{
+            } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        charge.getStatus()+ " Payment failed.");
+                        charge.getStatus() + " Payment failed.");
             }
         } catch (StripeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     e.getMessage());
         }
-
     }
 
     @GetMapping("api/user/exchange")
-    public ResponseEntity<Map<String, Object>> exchangeGold(HttpServletRequest httpRequest, HttpServletResponse httpResponse,@RequestParam Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> exchangeGold(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @RequestParam Map<String, Object> request) {
         Map<String, Object> response = new HashMap<>();
         double mySilverCoins = Double.parseDouble(request.get("mySilverCoins").toString());
         double myGoldCoins = Double.parseDouble(request.get("myGoldCoins").toString());
-        Users user = getUser(httpRequest,httpResponse);
-        if (myGoldCoins<0){
-            if (Math.abs(myGoldCoins)>user.getGoldBalance()){
+        Users user = getUser(httpRequest, httpResponse);
+        if (myGoldCoins < 0) {
+            if (Math.abs(myGoldCoins) > user.getGoldBalance()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have the amount specified in the account.");
-            }else{
+            } else {
                 user.setGoldBalance(user.getGoldBalance() + myGoldCoins);
-                user.setSilverBalance(user.getSilverBalance() + (Math.abs(myGoldCoins)*rateGold));
-                response.put("user",usersRepository.save(user));
+                user.setSilverBalance(user.getSilverBalance() + (Math.abs(myGoldCoins) * rateGold));
+                response.put("user", usersRepository.save(user));
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-
-        }else{
-            if (Math.abs(mySilverCoins)>user.getSilverBalance()){
+        } else {
+            if (Math.abs(mySilverCoins) > user.getSilverBalance()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "The user does not have the amount specified in the account.");
-            }else{
-                user.setGoldBalance(user.getGoldBalance() + (Math.abs(mySilverCoins)/rateSilver));
+            } else {
+                user.setGoldBalance(user.getGoldBalance() + (Math.abs(mySilverCoins) / rateSilver));
                 user.setSilverBalance(user.getSilverBalance() + mySilverCoins);
-                response.put("user",usersRepository.save(user));
+                response.put("user", usersRepository.save(user));
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
         }

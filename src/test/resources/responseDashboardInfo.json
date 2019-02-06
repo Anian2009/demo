@@ -1,0 +1,39 @@
+{
+  "user": {
+    "id": 4,
+    "name": "SomeUser",
+    "silverBalance": 0.0,
+    "goldBalance": 0.0,
+    "increase": 1.0E-5
+  },
+  "users": [
+    {
+      "id": 1,
+      "name": "firstUser",
+      "silverBalance": 0.0,
+      "goldBalance": 0.0,
+      "increase": 1.0E-5
+    },
+    {
+      "id": 2,
+      "name": "secondUser",
+      "silverBalance": 0.0,
+      "goldBalance": 0.0,
+      "increase": 1.0E-5
+    },
+    {
+      "id": 3,
+      "name": "threadUser",
+      "silverBalance": 0.0,
+      "goldBalance": 0.0,
+      "increase": 1.0E-5
+    },
+    {
+      "id": 4,
+      "name": "SomeUser",
+      "silverBalance": 0.0,
+      "goldBalance": 0.0,
+      "increase": 1.0E-5
+    }
+  ]
+}

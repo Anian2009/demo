@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.EmailValidator;
 import com.example.demo.domain.RoleType;
-import com.example.demo.domain.UserFabrics;
 import com.example.demo.domain.Users;
 import com.example.demo.repository.UsersRepository;
 import com.example.demo.service.MailSender;
@@ -18,14 +17,13 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 
 @RestController
-public class RegistrationController extends UserFromSecurity  {
+public class RegistrationController extends SpecialTasks {
 
     @Value("${exchange.rateGold}")
     private Integer rateGold;
@@ -49,12 +47,10 @@ public class RegistrationController extends UserFromSecurity  {
         this.mailSender = mailSender;
     }
 
-    @PostMapping(value = {"/api/guest/log-in"/*,"/api/admin/log-in"*/})
-    public ResponseEntity<Map<String, Object>> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse){
+    @PostMapping(value = {"/api/guest/log-in"})
+    public ResponseEntity<Map<String, Object>> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         Map<String, Object> response = new HashMap<>();
-
-        Users user = getUser(httpRequest,httpResponse);
-
+        Users user = getUser(httpRequest, httpResponse);
         response.put("message", user.getToken());
         response.put("role", user.getUserRole());
         response.put("email", user.getEmail());
@@ -68,13 +64,11 @@ public class RegistrationController extends UserFromSecurity  {
     public ResponseEntity<Map<String, Object>> addUser(@RequestBody Map<String, String> body) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
         Map<String, Object> response = new HashMap<>();
-
-        if (!new EmailValidator().validate(body.get("email"))){
+        if (!new EmailValidator().validate(body.get("email"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "E-mail incorrectly written.");
         }
         if (usersRepository.findByEmail(body.get("email")) == null) {
-
             String activationCode = UUID.randomUUID().toString();
             String message = String.format(
                     "Hello %s! \n" +
@@ -84,10 +78,10 @@ public class RegistrationController extends UserFromSecurity  {
                     body.get("name"), adress, activationCode);
             try {
                 mailSender.send(body.get("email"), "Activation code", message);
-            } catch (MailSendException ex){
+            } catch (MailSendException ex) {
                 System.out.println(ex.getMessage());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        body.get("email")+" - Account was suspended due to inactivity");
+                        body.get("email") + " - Account was suspended due to inactivity");
             }
             Users user = new Users(
                     body.get("name"),
@@ -96,11 +90,10 @@ public class RegistrationController extends UserFromSecurity  {
                     bCryptPasswordEncoder.encode(body.get("password")),
                     md5Hex(body.get("password") + body.get("name")));
             user.setActivationCode(activationCode);
-
-            Users userFromRepo = usersRepository.save(user);
-            response.put("user",userFromRepo.getName()  );
-            return new ResponseEntity<>(response,HttpStatus.OK);
-        } else{
+            usersRepository.save(user);
+            response.put("message", "A message was sent to your email with further instructions");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "A user with such an email already exists.");
         }
@@ -112,9 +105,11 @@ public class RegistrationController extends UserFromSecurity  {
         Users user = usersRepository.findByActivationCode(code);
         if (user != null) {
             user.setActivationCode("true");
-            response.put("message",usersRepository.save(user));
-            return new ResponseEntity<>(response,HttpStatus.OK);
-        }else{
+            usersRepository.save(user);
+            response.put("message", "Activation completed successfully. " +
+                    "You can enter the game using your email address and password");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "A user with such an activation key was not found in the database.");
         }

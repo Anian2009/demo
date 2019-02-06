@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 @Table(name = "fabrics")
 public class Fabrics {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private Double price;
     private String fabricName;
     private Double upgrade;

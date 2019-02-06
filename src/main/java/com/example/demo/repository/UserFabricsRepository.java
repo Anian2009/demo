@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface UserFabricsRepository extends JpaRepository<UserFabrics, Long> {
     UserFabrics findById (Integer id);
-    List<UserFabrics> findByMaster(Users master);
+    List<UserFabrics> findByMaster(Integer master);
 }

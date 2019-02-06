@@ -23,12 +23,12 @@ $(document).ready(function () {
         let cardData;
         data.forEach(function (item) {
             cardData = '<div class="card text-white bg-dark mb-3">';
-            cardData += '<img class="card-img-top" height="200" src=' + item.fabric.img + ' alt=' + item.fabric.img + '>';
+            cardData += '<img class="card-img-top" height="200" src=' + item.img + ' alt=' + item.img + '>';
             cardData += '<div class="card-body">';
-            cardData += '<h5 class="card-title"> ' + item.fabric.fabricName + ' :</h5>';
+            cardData += '<h5 class="card-title"> ' + item.name + ' :</h5>';
             cardData += '<div class="card-text">mining per second - ' + item.miningPerSecond + ' ;</div>';
             cardData += '<div class="card-text">level - ' + item.fabricLevel + ' ;</div>';
-            cardData += '<div class="card-text">upgrade price - ' + item.fabric.upgrade + ' ;</div>';
+            cardData += '<div class="card-text">upgrade price - ' + item.upgrade + ' ;</div>';
             cardData += '<p></p><a id="' + item.id + '" name="up' + item.id + '" class="btn btn-primary">Upgrade</a>';
             cardData += '</div>';
             cardData += '</div>';
@@ -41,7 +41,7 @@ $(document).ready(function () {
         upgradeThisFabric(this.id);
     });
 
-    $.ajax('/api/user/dashboard', {
+    $.ajax('/api/user/myFabric', {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json',

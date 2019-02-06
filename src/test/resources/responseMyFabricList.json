@@ -1,18 +1,18 @@
 {
   "fabrics": [
     {
-      "id": 1,
-      "master": 5,
+      "id": null,
+      "master": 4,
       "fabric": 1,
-      "fabricLevel": 2,
-      "miningPerSecond": 2.0E-5,
+      "fabricLevel": 1,
+      "miningPerSecond": 1.0E-5,
       "name": "First",
       "img": "img-1",
       "upgrade": 3.0
     },
     {
-      "id": 2,
-      "master": 5,
+      "id": null,
+      "master": 4,
       "fabric": 2,
       "fabricLevel": 1,
       "miningPerSecond": 6.0E-5,

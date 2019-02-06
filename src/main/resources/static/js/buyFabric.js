@@ -37,7 +37,7 @@ $(document).ready(function () {
             headers: {token: sessionStorage.getItem("token")},
             data: JSON.stringify({id: id}),
             success: function (data) {
-                alert("Congratulations! You have become the owner of a new plant. Information about your factories is on the main page.");
+                alert(data.message);
             },
             error: function (jqXHR) {
                 alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);

@@ -12,35 +12,44 @@ public class UserFabrics {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users master;
+    private Integer master;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fabric_id")
-    private Fabrics fabric;
+    private Integer fabric;
 
     @JoinColumn(name = "fabric_leval")
     private Integer fabricLevel;
 
     @JoinColumn(name = "fab_mining_p_s")
     private Double miningPerSecond;
+    private String name;
+    private String img;
+    private Double upgrade;
 
     public UserFabrics() {
     }
 
-    public UserFabrics(Users master, Fabrics fabric, Integer fabricLevel, Double miningPerSecond) {
+    public UserFabrics(Integer master, Integer fabric, Integer fabricLevel, Double miningPerSecond, String name, String img, Double upgrade) {
         this.master = master;
         this.fabric = fabric;
         this.fabricLevel = fabricLevel;
         this.miningPerSecond = miningPerSecond;
+        this.name = name;
+        this.img = img;
+        this.upgrade = upgrade;
     }
 
-    public UserFabrics(Users user, Fabrics fabric, Double miningPerSecond) {
+    public UserFabrics(Integer user, Integer fabric, Double miningPerSecond, String name, String img, Double upgrade) {
         this.master = user;
         this.fabric = fabric;
         this.fabricLevel = START_LEVEL;
         this.miningPerSecond = miningPerSecond;
+        this.name = name;
+        this.img = img;
+        this.upgrade = upgrade;
     }
 
     public Integer getId() {
@@ -51,19 +60,19 @@ public class UserFabrics {
         this.id = id;
     }
 
-    public Users getMaster() {
+    public Integer getMaster() {
         return master;
     }
 
-    public void setMaster(Users master) {
+    public void setMaster(Integer master) {
         this.master = master;
     }
 
-    public Fabrics getFabric() {
+    public Integer getFabric() {
         return fabric;
     }
 
-    public void setFabric(Fabrics fabric) {
+    public void setFabric(Integer fabric) {
         this.fabric = fabric;
     }
 
@@ -83,11 +92,35 @@ public class UserFabrics {
         this.miningPerSecond = miningPerSecond;
     }
 
-    public UserFabrics update() {
-        master.setIncrease(master.getIncrease()+miningPerSecond);
-        setMiningPerSecond(getMiningPerSecond()+miningPerSecond);
-        fabricLevel++;
-        master.setSilverBalance(master.getSilverBalance()-fabric.getUpgrade());
-        return this;
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Double getUpgrade() {
+        return upgrade;
+    }
+
+    public void setUpgrade(Double upgrade) {
+        this.upgrade = upgrade;
+    }
+
+    //    public UserFabrics update() {
+//        master.setIncrease(master.getIncrease()+miningPerSecond);
+//        setMiningPerSecond(getMiningPerSecond()+miningPerSecond);
+//        fabricLevel++;
+//        master.setSilverBalance(master.getSilverBalance()-fabric.getUpgrade());
+//        return this;
+//    }
 }

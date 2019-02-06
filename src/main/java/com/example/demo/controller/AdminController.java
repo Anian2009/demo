@@ -42,8 +42,8 @@ public class AdminController {
                     Double.parseDouble(body.get("newUpgrade")),
                     Double.parseDouble(body.get("newMining")),
                     body.get("image"));
-            response.put("message",fabricsRepository.save(fabric));
-        }catch (NullPointerException ex){
+            response.put("message", fabricsRepository.save(fabric));
+        } catch (NullPointerException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Lack of transmitted data to create an object.");
         }
