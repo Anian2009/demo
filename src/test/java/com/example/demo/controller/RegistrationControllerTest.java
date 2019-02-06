@@ -215,9 +215,8 @@ public class RegistrationControllerTest extends ReadFromFile {
         verifyNoMoreInteractions(usersRepository);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals("{\"message\":{\"id\":null,\"name\":\"SomeUser\",\"email\":\"SomeUser@some.net\"," +
-                "\"silverBalance\":0.0,\"goldBalance\":0.0,\"userRole\":\"USER\",\"password\":\"somePassword\",\"token\":\"user-token\"," +
-                "\"goldStatus\":0,\"silverStatus\":1,\"increase\":1.0E-5,\"totalBalance\":0.0,\"activationCode\":\"true\"}}",
+        JSONAssert.assertEquals("{\"message\":{\"id\":null,\"name\":\"SomeUser\"," +
+                "\"silverBalance\":0.0,\"goldBalance\":0.0,\"increase\":1.0E-5}}",
                 response.getBody(), false);
     }
 

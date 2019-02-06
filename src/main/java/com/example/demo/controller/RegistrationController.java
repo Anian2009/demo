@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.EmailValidator;
 import com.example.demo.domain.RoleType;
+import com.example.demo.domain.UserFabrics;
 import com.example.demo.domain.Users;
 import com.example.demo.repository.UsersRepository;
 import com.example.demo.service.MailSender;
@@ -17,13 +18,14 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 
 @RestController
-public class RegistrationController extends UserFromSecurity {
+public class RegistrationController extends UserFromSecurity  {
 
     @Value("${exchange.rateGold}")
     private Integer rateGold;
@@ -47,7 +49,7 @@ public class RegistrationController extends UserFromSecurity {
         this.mailSender = mailSender;
     }
 
-    @PostMapping(value = {"/api/guest/log-in","/api/admin/log-in"})
+    @PostMapping(value = {"/api/guest/log-in"/*,"/api/admin/log-in"*/})
     public ResponseEntity<Map<String, Object>> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse){
         Map<String, Object> response = new HashMap<>();
 

@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -21,16 +22,25 @@ public class Users /* implements Comparable<Users> */{
     private Integer id;
 
     private String name;
+    @JsonIgnore
     private String email;
     private Double silverBalance;
     private Double goldBalance;
+    @JsonIgnore
     private String userRole;
+
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String token;
+    @JsonIgnore
     private Integer goldStatus;
+    @JsonIgnore
     private Integer silverStatus;
     private Double increase;
+    @JsonIgnore
     private Double totalBalance;
+    @JsonIgnore
     private String activationCode;
 
     public Users() {

@@ -1,138 +1,81 @@
-{
-    "fabrics":
-        [
-            {
-                "id":null,
-                "master":{
-                    "id":null,
-                    "name":"SomeUser",
-                    "email":"User@some.net",
-                    "silverBalance":0.0,
-                    "goldBalance":0.0,
-                    "userRole":"USER",
-                    "password":"somePassword",
-                    "token":"user-token",
-                    "goldStatus":0,
-                    "silverStatus":1,
-                    "increase":1.0E-5,
-                    "totalBalance":0.0,
-                    "activationCode":null
-                    },
-                "fabric":{
-                    "id":null,
-                    "price":1.0,
-                    "fabricName":"firstFabric",
-                    "upgrade":3.0,
-                    "miningPerSecond":1.0E-5,
-                    "img":"image-1"
-                    },
-                "fabricLevel":1,
-                "miningPerSecond":1.0E-5
-            },
-            {
-                "id":null,
-                "master":{
-                    "id":null,
-                    "name":"SomeUser",
-                    "email":"User@some.net",
-                    "silverBalance":0.0,
-                    "goldBalance":0.0,
-                    "userRole":"USER",
-                    "password":"somePassword",
-                    "token":"user-token",
-                    "goldStatus":0,
-                    "silverStatus":1,
-                    "increase":1.0E-5,
-                    "totalBalance":0.0,
-                    "activationCode":null},
-                "fabric":{
-                    "id":null,
-                    "price":5.0,
-                    "fabricName":"secondFabric",
-                    "upgrade":15.0,
-                    "miningPerSecond":6.0E-5,
-                    "img":"image-2"},
-                "fabricLevel":2,
-                "miningPerSecond":1.2E-4
-            }
-        ],
-    "user":
+    {
+      "fabrics": [
         {
-            "id":null,
-            "name":"SomeUser",
-            "email":"User@some.net",
-            "silverBalance":0.0,
-            "goldBalance":0.0,
-            "userRole":"USER",
-            "password":"somePassword",
-            "token":"user-token",
-            "goldStatus":0,
-            "silverStatus":1,
-            "increase":1.0E-5,
-            "totalBalance":0.0,
-            "activationCode":null
+          "id": null,
+          "master": {
+            "id": null,
+            "name": "SomeUser",
+            "silverBalance": 0.0,
+            "goldBalance": 0.0,
+            "increase": 1.0E-5
+          },
+          "fabric": {
+            "id": null,
+            "price": 1.0,
+            "fabricName": "firstFabric",
+            "upgrade": 3.0,
+            "miningPerSecond": 1.0E-5,
+            "img": "image-1"
+          },
+          "fabricLevel": 1,
+          "miningPerSecond": 1.0E-5
         },
-    "users":
-        [
-            {
-                "id":null,
-                "name":"firstUser",
-                "email":"firstUser@some.net",
-                "silverBalance":0.0,
-                "goldBalance":0.0,
-                "userRole":"USER",
-                "password":"somePassword-1",
-                "token":"someToken-1",
-                "goldStatus":0,
-                "silverStatus":1,
-                "increase":1.0E-5,
-                "totalBalance":0.0,
-                "activationCode":null
-            },
-            {
-                "id":null,
-                "name":"secondUser",
-                "email":"secondUser@some.net",
-                "silverBalance":0.0,
-                "goldBalance":0.0,
-                "userRole":"USER",
-                "password":"somePassword-2",
-                "token":"someToken-2",
-                "goldStatus":0,
-                "silverStatus":1,
-                "increase":1.0E-5,
-                "totalBalance":0.0,
-                "activationCode":null
-            },
-            {
-                "id":null,
-                "name":"threadUser",
-                "email":"threadUser@some.net",
-                "silverBalance":0.0,
-                "goldBalance":0.0,
-                "userRole":"USER",
-                "password":"somePassword-3",
-                "token":"someToken-3",
-                "goldStatus":0,
-                "silverStatus":1,
-                "increase":1.0E-5,
-                "totalBalance":0.0,
-                "activationCode":null
-            },
-            {
-                "id":null,
-                "name":"forthUser",
-                "email":"forthUser@some.net",
-                "silverBalance":0.0,
-                "goldBalance":0.0,
-                "userRole":"USER",
-                "password":"somePassword-4",
-                "token":"someToken-4",
-                "goldStatus":0,
-                "silverStatus":1,
-                "increase":1.0E-5,
-                "totalBalance":0.0,
-                "activationCode":null
-            }
-        ]
-}
+        {
+          "id": null,
+          "master": {
+            "id": null,
+            "name": "SomeUser",
+            "silverBalance": 0.0,
+            "goldBalance": 0.0,
+            "increase": 1.0E-5
+          },
+          "fabric": {
+            "id": null,
+            "price": 5.0,
+            "fabricName": "secondFabric",
+            "upgrade": 15.0,
+            "miningPerSecond": 6.0E-5,
+            "img": "image-2"
+          },
+          "fabricLevel": 2,
+          "miningPerSecond": 1.2E-4
+        }
+      ],
+      "user": {
+        "id": null,
+        "name": "SomeUser",
+        "silverBalance": 0.0,
+        "goldBalance": 0.0,
+        "increase": 1.0E-5
+      },
+      "users": [
+        {
+          "id": null,
+          "name": "firstUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
+        },
+        {
+          "id": null,
+          "name": "secondUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
+        },
+        {
+          "id": null,
+          "name": "threadUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
+        },
+        {
+          "id": null,
+          "name": "forthUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
+        }
+      ]
+    }

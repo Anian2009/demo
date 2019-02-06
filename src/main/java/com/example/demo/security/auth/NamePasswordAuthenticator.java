@@ -8,11 +8,15 @@ import org.pac4j.core.credentials.UsernamePasswordCredentials;
 import org.pac4j.core.credentials.authenticator.Authenticator;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.util.CommonHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 
 public class NamePasswordAuthenticator implements Authenticator<UsernamePasswordCredentials> {
+
+    private static final Logger logger = LoggerFactory.getLogger(NamePasswordAuthenticator.class);
 
     private final UsersRepository usersRepository;
 
@@ -27,20 +31,20 @@ public class NamePasswordAuthenticator implements Authenticator<UsernamePassword
         final String password = credentials.getPassword();
 
         if (CommonHelper.isBlank(username) || CommonHelper.isBlank(password)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Empty username or password");
+            logger.info("Empty username or password");
+            return;
         }
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
 
         Users user = usersRepository.findByEmail(username);
         if (user == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "User with this email not found in DB.");
+            logger.info("User with this email not found in DB.");
+            return;
         }
         if (!Boolean.valueOf(user.getActivationCode())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "User has not completed registration. Check your email and follow the instructions.");
+            logger.info("User has not completed registration. Check your email and follow the instructions.");
+            return;
         }
 
         if (bCryptPasswordEncoder.matches(password,user.getPassword())) {
@@ -50,8 +54,8 @@ public class NamePasswordAuthenticator implements Authenticator<UsernamePassword
             profile.addAttribute("user", user);
             credentials.setUserProfile(profile);
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Wrong password.");
+            logger.info("Wrong password.");
+            return;
         }
     }
 }

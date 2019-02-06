@@ -1,37 +1,36 @@
 {
-    "fabrics":
-        [
-            {
-                "id":null,
-                "price":1.0,
-                "fabricName":"firstFabric",
-                "upgrade":3.0,
-                "miningPerSecond":1.0E-5,
-                "img":"image-1"
-            },
-            {
-                "id":null,
-                "price":5.0,
-                "fabricName":"secondFabric",
-                "upgrade":15.0,
-                "miningPerSecond":6.0E-5,
-                "img":"image-2"
-            },
-            {
-                "id":null,
-                "price":10.0,
-                "fabricName":"threadFabric",
-                "upgrade":30.0,
-                "miningPerSecond":1.5E-4,
-                "img":"image-3"
-            },
-            {
-                "id":null,
-                "price":50.0,
-                "fabricName":"forthFabric",
-                "upgrade":150.0,
-                "miningPerSecond":8.0E-4,
-                "img":"image-4"
-            }
-        ]
+  "fabrics": [
+    {
+      "id": null,
+      "price": 1.0,
+      "fabricName": "firstFabric",
+      "upgrade": 3.0,
+      "miningPerSecond": 1.0E-5,
+      "img": "image-1"
+    },
+    {
+      "id": null,
+      "price": 5.0,
+      "fabricName": "secondFabric",
+      "upgrade": 15.0,
+      "miningPerSecond": 6.0E-5,
+      "img": "image-2"
+    },
+    {
+      "id": null,
+      "price": 10.0,
+      "fabricName": "threadFabric",
+      "upgrade": 30.0,
+      "miningPerSecond": 1.5E-4,
+      "img": "image-3"
+    },
+    {
+      "id": null,
+      "price": 50.0,
+      "fabricName": "forthFabric",
+      "upgrade": 150.0,
+      "miningPerSecond": 8.0E-4,
+      "img": "image-4"
+    }
+  ]
 }

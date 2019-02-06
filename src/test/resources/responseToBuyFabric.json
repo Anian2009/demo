@@ -1,40 +1,29 @@
 {
-  "userFabric":{
-    "id":null,
-    "master":{
-      "id":null,
-      "name":"SomeUser",
-      "email":"User@some.net",
-      "silverBalance":9.0,
-      "goldBalance":0.0,
-      "userRole":"USER",
-      "password":"somePassword",
-      "token":"user-token",
-      "goldStatus":0,
-      "silverStatus":1,
-      "increase":2.0E-5,
-      "totalBalance":0.0,
-      "activationCode":null},
-    "fabric":{
-      "id":null,
-      "price":1.0,
-      "fabricName":"OneOfFabric",
-      "upgrade":3.0,
-      "miningPerSecond":1.0E-5,
-      "img":null},
-    "fabricLevel":1,
-    "miningPerSecond":1.0E-5},
-  "user":{
-    "id":null,
-    "name":"SomeUser",
-    "email":"User@some.net",
-    "silverBalance":9.0,
-    "goldBalance":0.0,
-    "userRole":"USER",
-    "password":"somePassword",
-    "token":"user-token",
-    "goldStatus":0,
-    "silverStatus":1,
-    "increase":2.0E-5,
-    "totalBalance":0.0,
-    "activationCode":null}}
+  "userFabric": {
+    "id": null,
+    "master": {
+      "id": null,
+      "name": "SomeUser",
+      "silverBalance": 9.0,
+      "goldBalance": 0.0,
+      "increase": 2.0E-5
+    },
+    "fabric": {
+      "id": null,
+      "price": 1.0,
+      "fabricName": "OneOfFabric",
+      "upgrade": 3.0,
+      "miningPerSecond": 1.0E-5,
+      "img": null
+    },
+    "fabricLevel": 1,
+    "miningPerSecond": 1.0E-5
+  },
+  "user": {
+    "id": null,
+    "name": "SomeUser",
+    "silverBalance": 9.0,
+    "goldBalance": 0.0,
+    "increase": 2.0E-5
+  }
+}

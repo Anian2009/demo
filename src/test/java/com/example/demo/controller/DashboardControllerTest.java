@@ -342,10 +342,8 @@ public class DashboardControllerTest extends ReadFromFile {
         verifyZeroInteractions(fabricsRepository);
         verifyZeroInteractions(userFabricsRepository);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals("{\"user\":{\"id\":null,\"name\":\"SomeUser\",\"email\":\"User@some.net\"," +
-                        "\"silverBalance\":100.0,\"goldBalance\":1.0,\"userRole\":\"USER\",\"password\":\"somePassword\"," +
-                        "\"token\":\"user-token\",\"goldStatus\":0,\"silverStatus\":1,\"increase\":1.0E-5," +
-                        "\"totalBalance\":0.0,\"activationCode\":null}}",
+        JSONAssert.assertEquals("{\"user\":{\"id\":null,\"name\":\"SomeUser\"," +
+                        "\"silverBalance\":100.0,\"goldBalance\":1.0,\"increase\":1.0E-5}}",
                 response.getBody(), false);
 
     }
@@ -367,10 +365,8 @@ public class DashboardControllerTest extends ReadFromFile {
         verifyZeroInteractions(fabricsRepository);
         verifyZeroInteractions(userFabricsRepository);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals("{\"user\":{\"id\":null,\"name\":\"SomeUser\",\"email\":\"User@some.net\"," +
-                        "\"silverBalance\":100.0,\"goldBalance\":1.0,\"userRole\":\"USER\",\"password\":\"somePassword\"," +
-                        "\"token\":\"user-token\",\"goldStatus\":0,\"silverStatus\":1,\"increase\":1.0E-5," +
-                        "\"totalBalance\":0.0,\"activationCode\":null}}",
+        JSONAssert.assertEquals("{\"user\":{\"id\":null,\"name\":\"SomeUser\"," +
+                        "\"silverBalance\":100.0,\"goldBalance\":1.0,\"increase\":1.0E-5}}",
                 response.getBody(), false);
     }
 
