@@ -38,4 +38,4 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: ~/demo/src/test/java/com/example/demo/controller/AdminControllerTest
+      - run: mvn integration-test
