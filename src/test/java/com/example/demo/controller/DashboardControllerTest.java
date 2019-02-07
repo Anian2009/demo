@@ -106,7 +106,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseDashboardInfo.json"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("src\\test\\resources\\responseDashboardInfo.json"), response.getBody(), false);
 
         verify(usersRepository).findAll();
         verify(usersRepository).findByToken("user-token");
@@ -131,7 +131,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseMyFabricList.json"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("src\\test\\resources\\responseMyFabricList.json"), response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
         verify(userFabricsRepository).findByMaster(userFoTest.getId());
@@ -169,7 +169,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToFactoryMarketList.json"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("src\\test\\resources\\responseToFactoryMarketList.json"), response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
         verifyNoMoreInteractions(usersRepository);
@@ -280,7 +280,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 new HttpEntity<>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("responseToUpgradeFabric.json"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("src\\test\\resources\\responseToUpgradeFabric.json"), response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
         verify(usersRepository).save(any());
