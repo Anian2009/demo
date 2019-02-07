@@ -1,9 +1,9 @@
-#**APIdoc for Oligarch**
+#APIdoc for Oligarch
 ***
 For admin account
 ---------------------------
 ***
-- ###Get a full list of existing factories
+- ### Get a full list of existing factories
 
 GET `api/admin/factory-list`
 
@@ -125,7 +125,7 @@ Response 200
       ]
     }
 
-- ###Get a list of own factories.
+- ### Get a list of own factories.
 
 GET `api/user/myFabric`
 
@@ -160,7 +160,7 @@ Response 200
 
 
 
-- ###Get a list of factories available for purchase.
+- ### Get a list of factories available for purchase.
 
 GET `api/user/factory-market`
 
@@ -197,7 +197,7 @@ Response 200
       ]
     }
 
-- ###Buy a plant.
+- ### Buy a plant.
 
 POST `api/user/buy-factory`
 
@@ -219,7 +219,7 @@ Response 400, 404
       "path": "/api/user/buy-factory"
     }
 
-- ###Upgrade plant. Returns a list of its own factories
+- ### Upgrade plant. Returns a list of its own factories
 
 PUT `api/user/upgrade-factory/{id}`
 
@@ -262,7 +262,7 @@ Response 400, 404
       "path": "/api/user/upgrade-factory/2"
     }
 
-- ###Buy gold status
+- ### Buy gold status
 
 GET `api/user/buy-gold-status?stripeToken=tok_1E0YLpAlgkTJhFEJsRGxHh9f`
 
@@ -285,7 +285,7 @@ Response 400
           "path": "/api/user/buy-gold-status"
         }
 
-- ###Exchange currency
+- ### Exchange currency
 
 GET `api/user/exchange?myGoldCoins=-2&mySilverCoins=400`
 
@@ -318,7 +318,7 @@ For the guest
 
 ***
 
-- ###Log in to game
+- ### Log in to game
 
 POST `/api/guest/log-in`
 
@@ -345,7 +345,7 @@ Response 401
       "path": "/api/guest/log-in"
     }
 
-- ###Registration
+- ### Registration
 
 POST `/api/guest/registration`
 
@@ -371,7 +371,7 @@ Response 400
         "path": "/api/guest/registration"
     }
     
-- ###Activation code
+- ### Activation code
 
 PUT `activation-code/{code}`
 
