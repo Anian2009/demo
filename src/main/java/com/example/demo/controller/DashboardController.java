@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,7 +148,7 @@ public class DashboardController extends SpecialTasks {
             if (charge.getStatus().equals("succeeded")) {
                 Users user = getUser(httpRequest, httpResponse);
                 usersRepository.save(user.changeStatus());
-                response.put("message", "Ok");
+                response.put("message", "succeeded");
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,

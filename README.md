@@ -3,12 +3,11 @@
 For admin account
 ---------------------------
 ***
-- ###The whole list of factories
+- ###Get a full list of existing factories
 
 GET `api/admin/factory-list`
 
-    headers: key = "token"
-             value = "admin-token"
+    HEADER: token:"admin-token"
 
 Response 200
 
@@ -37,14 +36,6 @@ Response 200
           "upgrade":30.0,
           "miningPerSecond":1.5E-4,
           "img":"image-3",
-        },
-        {
-          "id":4,
-          "price":50.0,
-          "fabricName":"forthFabric",
-          "upgrade":150.0,
-          "miningPerSecond":8.0E-4,
-          "img":"image-4"
         }
       ]
     }
@@ -53,15 +44,15 @@ Response 200
 
 POST `api/admin/add-factory`
 
-    headers: key = "token"
-             value = "admin-token"
+    HEADER: token:"admin-token"
              
-    data:    key = "newPrice"   value = "10",
-             key = "newPrice"   value = "10",
-             key = "newName"    value = "Microsoft corp",
-             key = "newUpgrade" value = "30",
-             key = "newMining"  value = "0.005",
-             key = "image"      value = "../image/image-8",
+    DATA:   {
+                "newPrice"   : 10,
+                "newName"    : "Microsoft corp",
+                "newUpgrade" : 30,
+                "newMining"  : 0.005,
+                "image"      : "../image/image-8"
+             }
                 
 Response 200
 
@@ -92,101 +83,88 @@ Response 400 - When enough data is not transmitted to create a new object.
   ---------------------------
   
 ***
-- ### Get information for the main page: `"user"` - to output your own data; `"users"` - to form a board of leaders, `"fabrics"` - for the withdrawal of their own factories.
+
+- ### Get information for the main page: `"user"` - to output your own data; `"users"` - to form a board of leaders.
 
 GET `api/user/dashboard`
 
-    headers: key = "token"
-             value = "user-token"
+    HEADER: token:"user-token"
 
 Response 200
 
     {
-          "fabrics": [
-            {
-              "id": 1,
-              "master": {
-                "id": null,
-                "name": "SomeUser",
-                "silverBalance": 0.0,
-                "goldBalance": 0.0,
-                "increase": 1.0E-5
-              },
-              "fabric": {
-                "id": 2,
-                "price": 1.0,
-                "fabricName": "firstFabric",
-                "upgrade": 3.0,
-                "miningPerSecond": 1.0E-5,
-                "img": "image-1"
-              },
-              "fabricLevel": 1,
-              "miningPerSecond": 1.0E-5
-            },
-            {
-              "id": 1,
-              "master": {
-                "id": 2,
-                "name": "SomeUser",
-                "silverBalance": 0.0,
-                "goldBalance": 0.0,
-                "increase": 1.0E-5
-              },
-              "fabric": {
-                "id": 2,
-                "price": 5.0,
-                "fabricName": "secondFabric",
-                "upgrade": 15.0,
-                "miningPerSecond": 6.0E-5,
-                "img": "image-2"
-              },
-              "fabricLevel": 2,
-              "miningPerSecond": 1.2E-4
-            }
-          ],
-          "user": {
-            "id": 1,
-            "name": "SomeUser",
-            "silverBalance": 0.0,
-            "goldBalance": 0.0,
-            "increase": 1.0E-5
-          },
-          "users": [
-            {
-              "id": 1,
-              "name": "firstUser",
-              "silverBalance": 0.0,
-              "goldBalance": 0.0,
-              "increase": 1.0E-5
-            },
-            {
-              "id": 2,
-              "name": "secondUser",
-              "silverBalance": 0.0,
-              "goldBalance": 0.0,
-              "increase": 1.0E-5
-            },
-            {
-              "id": 3,
-              "name": "threadUser",
-              "silverBalance": 0.0,
-              "goldBalance": 0.0,
-              "increase": 1.0E-5
-            },
-            {
-              "id": 4,
-              "name": "forthUser",
-              "silverBalance": 0.0,
-              "goldBalance": 0.0,
-              "increase": 1.0E-5
-            }
-          ]
+      "user": {
+        "id": 3,
+        "name": "SomeUser",
+        "silverBalance": 0.0,
+        "goldBalance": 0.0,
+        "increase": 1.0E-5
+      },
+      "users": [
+        {
+          "id": 1,
+          "name": "firstUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
+        },
+        {
+          "id": 2,
+          "name": "secondUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
+        },
+        {
+          "id": 3,
+          "name": "SomeUser",
+          "silverBalance": 0.0,
+          "goldBalance": 0.0,
+          "increase": 1.0E-5
         }
+      ]
+    }
+
+- ###Get a list of own factories.
+
+GET `api/user/myFabric`
+
+    HEADER: token:"user-token"
+
+Response 200
+
+    {
+      "fabrics": [
+        {
+          "id": 1,
+          "master": 4,
+          "fabric": 1,
+          "fabricLevel": 1,
+          "miningPerSecond": 1.0E-5,
+          "name": "First",
+          "img": "img-1",
+          "upgrade": 3.0
+        },
+        {
+          "id": 2,
+          "master": 4,
+          "fabric": 2,
+          "fabricLevel": 1,
+          "miningPerSecond": 6.0E-5,
+          "name": "Second",
+          "img": "img-2",
+          "upgrade": 15.0
+        }
+      ]
+    }
+
+
 
 - ###Get a list of factories available for purchase.
+
 GET `api/user/factory-market`
 
-    headers: {token : "user-token"}
+    HEADER: token:"user-token"
 
 Response 200
 
@@ -215,55 +193,21 @@ Response 200
           "upgrade": 30.0,
           "miningPerSecond": 1.5E-4,
           "img": "image-3"
-        },
-        {
-          "id": 4,
-          "price": 50.0,
-          "fabricName": "forthFabric",
-          "upgrade": 150.0,
-          "miningPerSecond": 8.0E-4,
-          "img": "image-4"
         }
       ]
     }
 
 - ###Buy a plant.
+
 POST `api/user/buy-factory`
 
-    headers: {token : "user-token"}
-    data: JSON.stringify({id: 2})
+    HEADER: token:"user-token"
+    
+    DATA: {id: 1}
 
 Response 200
 
-    {
-      "userFabric": {
-        "id": 1,
-        "master": {
-          "id": null,
-          "name": "SomeUser",
-          "silverBalance": 9.0,
-          "goldBalance": 0.0,
-          "increase": 2.0E-5
-        },
-        "fabric": {
-          "id": 2,
-          "price": 1.0,
-          "fabricName": "OneOfFabric",
-          "upgrade": 3.0,
-          "miningPerSecond": 1.0E-5,
-          "img": "image-3"
-        },
-        "fabricLevel": 1,
-        "miningPerSecond": 1.0E-5
-      },
-      "user": {
-        "id": 3,
-        "name": "SomeUser",
-        "silverBalance": 9.0,
-        "goldBalance": 0.0,
-        "increase": 2.0E-5
-      }
-    }
+       {"message": "Congratulations! You have become the owner of a new plant. Information about your factories is on the main page."}
 
 Response 400, 404
 
@@ -276,9 +220,10 @@ Response 400, 404
     }
 
 - ###Upgrade plant. Returns a list of its own factories
+
 PUT `api/user/upgrade-factory/{id}`
 
-    headers: {token : "user-token"}
+    HEADER: token:"user-token"
 
 Response 200
 
@@ -286,46 +231,26 @@ Response 200
       "fabrics": [
         {
           "id": 1,
-          "master": {
-            "id": 2,
-            "name": "SomeUser",
-            "silverBalance": 7.0,
-            "goldBalance": 0.0,
-            "increase": 2.0E-5
-          },
-          "fabric": {
-            "id": 1,
-            "price": 1.0,
-            "fabricName": "firstFabric",
-            "upgrade": 3.0,
-            "miningPerSecond": 1.0E-5,
-            "img": "image-1"
-          },
-          "fabricLevel": 1,
-          "miningPerSecond": 1.0E-5
+          "master": 5,
+          "fabric": 1,
+          "fabricLevel": 2,
+          "miningPerSecond": 2.0E-5,
+          "name": "First",
+          "img": "img-1",
+          "upgrade": 3.0
         },
         {
           "id": 2,
-          "master": {
-            "id": 1,
-            "name": "SomeUser",
-            "silverBalance": 7.0,
-            "goldBalance": 0.0,
-            "increase": 2.0E-5
-          },
-          "fabric": {
-            "id": null,
-            "price": 5.0,
-            "fabricName": "secondFabric",
-            "upgrade": 15.0,
-            "miningPerSecond": 6.0E-5,
-            "img": "image-2"
-          },
-          "fabricLevel": 2,
-          "miningPerSecond": 1.2E-4
+          "master": 5,
+          "fabric": 2,
+          "fabricLevel": 1,
+          "miningPerSecond": 6.0E-5,
+          "name": "Second",
+          "img": "img-2",
+          "upgrade": 15.0
         }
       ]
-    }
+    }      
 
 Response 400, 404
 
@@ -338,15 +263,16 @@ Response 400, 404
     }
 
 - ###Buy gold status
-GET `api/user/buy-gold-status`
 
-    headers: {token : "user-token"},
-    data: {stripeToken: "tok_1E0YLpAlgkTJhFEJsRGxHh9f"}
+GET `api/user/buy-gold-status?stripeToken=tok_1E0YLpAlgkTJhFEJsRGxHh9f`
+
+    HEADER: token:"user-token"
+    
     
 Response 200
 
     {
-      "message": "Ok"
+      "message": "succeeded"
     }
     
 Response 400
@@ -360,11 +286,10 @@ Response 400
         }
 
 - ###Exchange currency
-GET `api/user/exchange`
 
-    headers: {token : "user-token"},
-    data: {myGoldCoins: - "-2",
-           mySilverCoins: "400",
+GET `api/user/exchange?myGoldCoins=-2&mySilverCoins=400`
+
+    HEADER: token:"user-token"
     
 Response 200
 
@@ -388,13 +313,16 @@ Response 400
         "path": "/api/user/exchange"
     }
 
-RegistrationControllerTest
+For the guest
 ---------------------------
+
 ***
+
 - ###Log in to game
+
 POST `/api/guest/log-in`
 
-    headers: {"Authorization":"Basic U29tZVVzZXJAc29tZS5uZXQ6c29tZVBhc3N3b3Jk"}
+    HEADER: {"Authorization":"Basic U29tZVVzZXJAc29tZS5uZXQ6c29tZVBhc3N3b3Jk"}
 
 Response 200
 
@@ -418,17 +346,20 @@ Response 401
     }
 
 - ###Registration
+
 POST `/api/guest/registration`
 
-    data: JSON.stringify({
-                    name: "UserName",
-                    email: "SomeUser@some.net",
-                    password: "SomePassword"
-                })
+    DATA: {
+            name: "UserName",
+            email: "SomeUser@some.net",
+            password: "SomePassword"
+          }
 
 Response 200
 
-      {"user":UserName}
+      {
+        "message":"A message was sent to your email with further instructions"
+      }
       
 Response 400
 
@@ -441,18 +372,13 @@ Response 400
     }
     
 - ###Activation code
+
 PUT `activation-code/{code}`
 
 Response 200
 
       {
-        "message": {
-          "id": 3,
-          "name": "SomeUser",
-          "silverBalance": 0.0,
-          "goldBalance": 0.0,
-          "increase": 1.0E-5
-        }
+        "message":"Activation completed successfully. You can enter the game using your email address and password"
       }
       
 Response 400
