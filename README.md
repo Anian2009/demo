@@ -203,11 +203,15 @@ POST `api/user/buy-factory`
 
     HEADER: token:"user-token"
     
-    DATA: {id: 1}
+    DATA: {
+            "id": 1
+          }
 
 Response 200
 
-       {"message": "Congratulations! You have become the owner of a new plant. Information about your factories is on the main page."}
+       {
+         "message": "Congratulations! You have become the owner of a new plant. Information about your factories is on the main page."
+       }
 
 Response 400, 404
 
@@ -221,7 +225,7 @@ Response 400, 404
 
 - ### Upgrade plant. Returns a list of its own factories
 
-PUT `api/user/upgrade-factory/{id}`
+PUT `api/user/upgrade-factory/1`
 
     HEADER: token:"user-token"
 
@@ -350,9 +354,9 @@ Response 401
 POST `/api/guest/registration`
 
     DATA: {
-            name: "UserName",
-            email: "SomeUser@some.net",
-            password: "SomePassword"
+            "name": "UserName",
+            "email": "SomeUser@some.net",
+            "password": "SomePassword"
           }
 
 Response 200
