@@ -1,0 +1,22 @@
+machine:
+  java:
+    version: 1.8
+
+general:
+  branches:
+    only:
+      - master
+
+dependencies:
+  pre:
+#    - wget http://url_for_your_libs
+    - wget http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar #download selenium-server
+    - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024
+    - sleep 3
+    - java -jar selenium-server-standalone-2.45.0.jar > /dev/null 2>/dev/null:
+        background: true
+    - sleep 30
+
+#test:
+#  override:
+#    - #here should be build commands and run commands for your tests
