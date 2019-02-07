@@ -86,7 +86,7 @@ public class AdminControllerTest extends ReadFromFile {
                 new HttpEntity<String>(headers), String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONAssert.assertEquals(readFromFile("src\\test\\resources\\responseToFactoryMarketList.json"), response.getBody(), false);
+        JSONAssert.assertEquals(readFromFile("src/test/resources/responseToFactoryMarketList.json"), response.getBody(), false);
 
         verify(usersRepository).findByToken("admin-token");
         verify(fabricsRepository).findAll();
