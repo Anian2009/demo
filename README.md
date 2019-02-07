@@ -7,7 +7,7 @@ For admin account
 
 GET `api/admin/factory-list`
 
-    HEADER: token:"admin-token"
+    HEADER: "token" :"admin-token"
 
 Response 200
 
@@ -44,7 +44,7 @@ Response 200
 
 POST `api/admin/add-factory`
 
-    HEADER: token:"admin-token"
+    HEADER: "token" : "admin-token"
              
     DATA:   {
                 "newPrice"   : 10,
@@ -88,7 +88,7 @@ Response 400 - When enough data is not transmitted to create a new object.
 
 GET `api/user/dashboard`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
 
 Response 200
 
@@ -129,7 +129,7 @@ Response 200
 
 GET `api/user/myFabric`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
 
 Response 200
 
@@ -164,7 +164,7 @@ Response 200
 
 GET `api/user/factory-market`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
 
 Response 200
 
@@ -201,7 +201,7 @@ Response 200
 
 POST `api/user/buy-factory`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
     
     DATA: {
             "id": 1
@@ -227,7 +227,7 @@ Response 400, 404
 
 PUT `api/user/upgrade-factory/1`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
 
 Response 200
 
@@ -270,7 +270,7 @@ Response 400, 404
 
 GET `api/user/buy-gold-status?stripeToken=tok_1E0YLpAlgkTJhFEJsRGxHh9f`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
     
     
 Response 200
@@ -293,7 +293,7 @@ Response 400
 
 GET `api/user/exchange?myGoldCoins=-2&mySilverCoins=400`
 
-    HEADER: token:"user-token"
+    HEADER: "token":"user-token"
     
 Response 200
 
@@ -326,7 +326,7 @@ For the guest
 
 POST `/api/guest/log-in`
 
-    HEADER: {"Authorization":"Basic U29tZVVzZXJAc29tZS5uZXQ6c29tZVBhc3N3b3Jk"}
+    HEADER: "Authorization":"Basic U29tZVVzZXJAc29tZS5uZXQ6c29tZVBhc3N3b3Jk"
 
 Response 200
 

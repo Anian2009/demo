@@ -27,7 +27,6 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @ActiveProfiles("registrationControllerMockProfile")
 @RunWith(SpringRunner.class)
