@@ -5,18 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_fabrics_info")
 public class UserFabrics {
-
     private static final Integer START_LEVEL = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Integer master;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fabric_id")
     private Integer fabric;
 
@@ -115,12 +112,4 @@ public class UserFabrics {
     public void setUpgrade(Double upgrade) {
         this.upgrade = upgrade;
     }
-
-    //    public UserFabrics update() {
-//        master.setIncrease(master.getIncrease()+miningPerSecond);
-//        setMiningPerSecond(getMiningPerSecond()+miningPerSecond);
-//        fabricLevel++;
-//        master.setSilverBalance(master.getSilverBalance()-fabric.getUpgrade());
-//        return this;
-//    }
 }
