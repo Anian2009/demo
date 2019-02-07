@@ -34,7 +34,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ~/.m2
+            - ~/results
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
