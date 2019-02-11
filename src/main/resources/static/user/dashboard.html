@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Oligarch</title>
-    <script language="JavaScript" type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/jquery-3.3.1.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/knockout-3.4.2.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -14,7 +15,6 @@
             crossorigin="anonymous"></script>
     <script language="JavaScript" type="text/javascript" src="../js/main.js"></script>
     <script language="JavaScript" type="text/javascript" src="../js/main-1.js"></script>
-
     <script src="https://checkout.stripe.com/checkout.js"></script>
 
 </head>
@@ -43,13 +43,18 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <div class="col" align="justify">
+        <div class="col" align="justify" id="liderDashboard">
             <hr>
             <h4>
                 <div align="center">Leader list</div>
             </h4>
             <hr>
-            <ol id="usersList" style="font-size: 75%">
+            <ol style="font-size: 75%" data-bind="foreach: usersInfo">
+                <div>
+                    <span data-bind="text: name"></span>
+                    <span> - </span>
+                    <span data-bind="text: silverBalance"></span>
+                </div>
             </ol>
         </div>
         <div class="col-7">
@@ -63,11 +68,25 @@
             <!--cards-->
         </div>
         <div class="col">
-            <hr>
-            <h4 id="userName">name</h4>
-            <div id="silverBal" style="font-size: 75%">silver balance</div>
-            <div id="goldBal" style="font-size: 75%">gold balance</div>
-            <div id="increase" style="font-size: 75%">per second</div>
+            <div data-bind="foreach: userInfo" style="font-size: 100%">
+                <hr>
+                <h4 data-bind="text: name"></h4>
+                <div>
+                    <span>Silver coins - </span>
+                    <span data-bind="text: silverBalance"></span>
+                    <span>;</span>
+                </div>
+                <div>
+                    <span>Gold coins - </span>
+                    <span data-bind="text: goldBalance"></span>
+                    <span>;</span>
+                </div>
+                <div>
+                    <span>Increase - </span>
+                    <span data-bind="text: increase"></span>
+                    <span>;</span>
+                </div>
+            </div>
             <hr>
             <p><a href="buyFabric.html" class="badge badge-primary">Buy fabric</a></p>
             <p><a href="#" id="customButton" class="badge badge-primary">Buy gold status</a></p>

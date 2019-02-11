@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Oligarch</title>
 
-    <script language="JavaScript" type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -14,7 +14,6 @@
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <script language="JavaScript" type="text/javascript" src="../js/buyFabric.js"></script>
-    <script language="JavaScript" type="text/javascript" src="../js/main-1.js"></script>
     <script language="JavaScript" type='text/javascript' src='../js/jsLibrary/knockout-3.4.2.js'></script>
 
 </head>
@@ -50,12 +49,17 @@
                     <div align="center">Leader list</div>
                 </h4>
                 <hr>
-                <ol id="usersList" style="font-size: 75%">
+                <ol style="font-size: 75%" data-bind="foreach: usersInfo">
+                    <div>
+                        <span data-bind="text: name"></span>
+                        <span> - </span>
+                        <span data-bind="text: silverBalance"></span>
+                    </div>
                 </ol>
             </div>
             <div class="col-7">
                 <!--Fabrics-->
-                <div class="container" align="center">
+                <div class="container" align="center" id="tableListOfFabrics">
                     <div class="table-responsive" align="center">
                         <h3 align="center">Fabrics ich you can bay</h3>
                         <table class="table table-bordered table-striped">
@@ -74,7 +78,10 @@
                                 <td data-bind="text: price"></td>
                                 <td data-bind="text: upgrade"></td>
                                 <td data-bind="text: miningPerSecond"></td>
-                                <td><button class="btn btn-primary btn-sm" data-bind="click: $parent.buyFabric">Buy</button></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" data-bind="click: $parent.buyFabric">Buy
+                                    </button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -82,14 +89,29 @@
                 </div>
                 <!--Fabrics-->
             </div>
-            <div class="col">
+            <div class="col" id="liderDashboard">
+                <div data-bind="foreach: userInfo" style="font-size: 100%">
+                    <hr>
+                    <h4 data-bind="text: name"></h4>
+                    <div>
+                        <span>Silver coins - </span>
+                        <span data-bind="text: silverBalance"></span>
+                        <span>;</span>
+                    </div>
+                    <div>
+                        <span>Gold coins - </span>
+                        <span data-bind="text: goldBalance"></span>
+                        <span>;</span>
+                    </div>
+                    <div>
+                        <span>Increase - </span>
+                        <span data-bind="text: increase"></span>
+                        <span>;</span>
+                    </div>
+                </div>
                 <hr>
-                <h4 id="userName" >name</h4>
-                <div id="silverBal" style="font-size: 75%">silver balance</div>
-                <div id="goldBal" style="font-size: 75%">gold balance</div>
-                <div id="increase" style="font-size: 75%">per second</div>
-                <hr>
-<p><a href="dashboard.html" class="badge badge-primary">Main page</a></p>
-<hr>
+<p>
+    <a href="dashboard.html" class="badge badge-primary">Main page</a>
+</p>
 </body>
 </html>
