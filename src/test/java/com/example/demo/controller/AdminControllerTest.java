@@ -90,8 +90,6 @@ public class AdminControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByToken("admin-token");
         verify(fabricsRepository).findAll();
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(fabricsRepository);
     }
 
     @Test
@@ -117,8 +115,6 @@ public class AdminControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByToken("admin-token");
         verify(fabricsRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(fabricsRepository);
     }
 
     @Test

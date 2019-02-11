@@ -42,13 +42,13 @@ CREATE TABLE `fabrics` (
 
  -- Insert some data
   INSERT INTO fabrics (fabric_name, img, price, mining_per_second, upgrade)
-  VALUES ('Motorcycle factory','../immage/fab_none-1.jpg',1.0,0.00001,3.0);
+  VALUES ('Motorcycle factory','../immage/fabricsImage/fab_none-1.jpg',1.0,0.00001,3.0);
   INSERT INTO fabrics(fabric_name, img, price, mining_per_second, upgrade)
-  VALUES ('Automobile Building Plant','../immage/fab_none-2.jpg', 5.0,0.00006,15.0);
+  VALUES ('Automobile Building Plant','../immage/fabricsImage/fab_none-2.jpg', 5.0,0.00006,15.0);
   INSERT INTO fabrics(fabric_name, img, price, mining_per_second, upgrade)
-  VALUES ('Instrument-making plant','../immage/fab_none-3.jpg', 10.0,0.00015,30.0);
+  VALUES ('Instrument-making plant','../immage/fabricsImage/fab_none-3.jpg', 10.0,0.00015,30.0);
   INSERT INTO fabrics(fabric_name, img, price, mining_per_second, upgrade)
-  VALUES ('Shipbuilding Plant','../immage/fab_none-4.jpg', 50.0,0.0008,150.0);
+  VALUES ('Shipbuilding Plant','../immage/fabricsImage/fab_none-4.jpg', 50.0,0.0008,150.0);
 
   INSERT INTO users (activation_code, email, gold_balance, gold_status, increase, name, password, silver_balance,
                      silver_status, token, total_balance, user_role)

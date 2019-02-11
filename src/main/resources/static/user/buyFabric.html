@@ -19,10 +19,14 @@
 
 </head>
 <body background="../immage/main_fon22.gif">
-<!-- \/ \/ \/ \/ \/ Navigation bar \/ \/ \/ \/ \/ -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">"Oligarch"</a>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <a class="navbar-brand" href="/">"OLIGARCH"</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
@@ -31,11 +35,12 @@
                 <a class="nav-link" href="dashboard.html">Main page</a>
             </li>
         </ul>
-        <span class="navbar-text mr-3">Welcome to the game</span>
-        <button id="logOut" type="button" class="btn btn-outline-light">Log out</button>
+        <form class="form-inline my-2 my-lg-0">
+            <span class="navbar-text mr-3">Welcome to the game</span>
+            <button id="logOut" type="button" class="btn btn-outline-light">Log out</button>
+        </form>
     </div>
 </nav>
-<!-- /\ /\ /\ /\ /\ Navigation bar /\ /\ /\ /\ /\  -->
 <p>
     <div class="container-fluid">
         <div class="row">
@@ -45,7 +50,7 @@
                     <div align="center">Leader list</div>
                 </h4>
                 <hr>
-                <ol id="usersList">
+                <ol id="usersList" style="font-size: 75%">
                 </ol>
             </div>
             <div class="col-7">
@@ -53,12 +58,12 @@
                 <div class="container" align="center">
                     <div class="table-responsive" align="center">
                         <h3 align="center">Fabrics ich you can bay</h3>
-                        <table class="table table-bordered table-striped" id="factoriesToBuy" align="center">
-                            <tr>
-                                <th align="center">Factory name</th>
-                                <th align="center">Price</th>
-                                <th align="center">Upgrade costs</th>
-                                <th align="center">Mining per second</th>
+                        <table class="table table-bordered table-striped" id="factoriesToBuy" style="font-size: 75%" >
+                            <tr align="center">
+                                <th>Factory name</th>
+                                <th>Price</th>
+                                <th>Upgrade costs</th>
+                                <th>Mining per second</th>
                                 <th></th>
                             </tr>
                         </table>
@@ -68,10 +73,10 @@
             </div>
             <div class="col">
                 <hr>
-                <h3 id="userName">name</h3>
-                <div id="silverBal">silver balance</div>
-                <div id="goldBal">gold balance</div>
-                <div id="increase">per second</div>
+                <h4 id="userName" >name</h4>
+                <div id="silverBal" style="font-size: 75%">silver balance</div>
+                <div id="goldBal" style="font-size: 75%">gold balance</div>
+                <div id="increase" style="font-size: 75%">per second</div>
                 <hr>
 <p><a href="dashboard.html" class="badge badge-primary">Main page</a></p>
 <hr>

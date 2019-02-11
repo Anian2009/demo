@@ -19,10 +19,14 @@
 
 </head>
 <body background="../immage/main_fon22.gif">
-<!-- \/ \/ \/ \/ \/ Navigation bar \/ \/ \/ \/ \/ -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">"Oligarch"</a>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <a class="navbar-brand" href="/">"OLIGARCH"</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
@@ -31,11 +35,12 @@
                 <a class="nav-link" href="buyFabric.html">Buy fabric</a>
             </li>
         </ul>
-        <span class="navbar-text mr-3">Welcome to the game</span>
-        <button id="logOut" type="button" class="btn btn-outline-light">Log out</button>
+        <form class="form-inline my-2 my-lg-0">
+            <span class="navbar-text mr-3">Welcome to the game</span>
+            <button id="logOut" type="button" class="btn btn-outline-light">Log out</button>
+        </form>
     </div>
 </nav>
-<!-- /\ /\ /\ /\ /\ Navigation bar /\ /\ /\ /\ /\  -->
 <div class="container-fluid">
     <div class="row">
         <div class="col" align="justify">
@@ -44,7 +49,7 @@
                 <div align="center">Leader list</div>
             </h4>
             <hr>
-            <ol id="usersList">
+            <ol id="usersList" style="font-size: 75%">
             </ol>
         </div>
         <div class="col-7">
@@ -59,10 +64,10 @@
         </div>
         <div class="col">
             <hr>
-            <h3 id="userName">name</h3>
-            <div id="silverBal">silver balance</div>
-            <div id="goldBal">gold balance</div>
-            <div id="increase">per second</div>
+            <h4 id="userName">name</h4>
+            <div id="silverBal" style="font-size: 75%">silver balance</div>
+            <div id="goldBal" style="font-size: 75%">gold balance</div>
+            <div id="increase" style="font-size: 75%">per second</div>
             <hr>
             <p><a href="buyFabric.html" class="badge badge-primary">Buy fabric</a></p>
             <p><a href="#" id="customButton" class="badge badge-primary">Buy gold status</a></p>
@@ -91,13 +96,15 @@
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Sell gold
                                 </button>
                             </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                             data-parent="#accordionExample">
                             <div class="card-body">
                                 <!--Sell gold block-->
                                 <div>
@@ -110,7 +117,8 @@
                                     <input id="silverSellGold" type="text" class="form-control "/>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" id="exchangeSellGold">Make exchange</button>
+                                    <button type="button" class="btn btn-primary" id="exchangeSellGold">Make exchange
+                                    </button>
                                 </div>
                                 <!--Sell gold block-->
                             </div>
@@ -119,12 +127,14 @@
                     <div class="card">
                         <div class="card-header" id="headingTwo">
                             <h2 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Buy gold
                                 </button>
                             </h2>
                         </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                             data-parent="#accordionExample">
                             <div class="card-body">
                                 <!--Buy gold block-->
                                 <div>
@@ -137,7 +147,8 @@
                                     <input id="goldBuyGold" type="text" class="form-control "/>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" id="exchangeBuyGold">Make exchange</button>
+                                    <button type="button" class="btn btn-primary" id="exchangeBuyGold">Make exchange
+                                    </button>
                                 </div>
                                 <!--Buy gold block-->
                             </div>

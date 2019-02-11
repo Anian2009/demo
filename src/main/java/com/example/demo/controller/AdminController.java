@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class AdminController {
@@ -29,6 +31,8 @@ public class AdminController {
         Map<String, Object> response = new HashMap<>();
         List<Fabrics> fabrics = fabricsRepository.findAll();
         response.put("fabrics", fabrics);
+        response.put("imageC", Objects.requireNonNull(new File("src/main/resources/static/immage/fabricsImage/")
+                .listFiles()).length);
         return response;
     }
 
