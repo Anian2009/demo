@@ -15,7 +15,7 @@
             crossorigin="anonymous"></script>
     <script language="JavaScript" type="text/javascript" src="../js/buyFabric.js"></script>
     <script language="JavaScript" type="text/javascript" src="../js/main-1.js"></script>
-    <!--<script language="JavaScript" type='text/javascript' src='../js/jsLibrary/knockout-3.4.2.js'></script>-->
+    <script language="JavaScript" type='text/javascript' src='../js/jsLibrary/knockout-3.4.2.js'></script>
 
 </head>
 <body background="../immage/main_fon22.gif">
@@ -58,7 +58,8 @@
                 <div class="container" align="center">
                     <div class="table-responsive" align="center">
                         <h3 align="center">Fabrics ich you can bay</h3>
-                        <table class="table table-bordered table-striped" id="factoriesToBuy" style="font-size: 75%" >
+                        <table class="table table-bordered table-striped">
+                            <thead>
                             <tr align="center">
                                 <th>Factory name</th>
                                 <th>Price</th>
@@ -66,6 +67,16 @@
                                 <th>Mining per second</th>
                                 <th></th>
                             </tr>
+                            </thead>
+                            <tbody data-bind="foreach: fabrics">
+                            <tr align="center">
+                                <td data-bind="text: fabricName"></td>
+                                <td data-bind="text: price"></td>
+                                <td data-bind="text: upgrade"></td>
+                                <td data-bind="text: miningPerSecond"></td>
+                                <td><button class="btn btn-primary btn-sm" data-bind="click: $parent.buyFabric">Buy</button></td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
