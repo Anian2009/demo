@@ -85,7 +85,7 @@ $(document).ready(function () {
     document.getElementById('customButton').addEventListener('click', function (e) {
         // Open Checkout with further options:
         handler.open({
-            name: "Anian",//sessionStorage.getItem("username"),
+            name: "Anian",
             email: sessionStorage.getItem("email"),
             description: 'Gold status',
             amount: +sessionStorage.getItem("price"),

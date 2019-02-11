@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Oligarch</title>
-    <script language="JavaScript" type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/jsLibrary/jquery-3.3.1.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/jsLibrary/knockout-3.4.2.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -17,8 +18,13 @@
 </head>
 <body background="immage/main_fon.gif">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">"Oligarch"</a>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <a class="navbar-brand" href="/">"OLIGARCH"</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -27,32 +33,37 @@
                 <a class="nav-link" href="registration.html">Registration</a>
             </li>
         </ul>
-        <span class="navbar-text">Welcome to the game</span>
+        <form class="form-inline my-2 my-lg-0">
+            <span class="navbar-text mr-3">Welcome to the game</span>
+        </form>
     </div>
 </nav>
 <p></p>
 <h4 align="center">Login page</h4>
 <p></p>
-<!--<div class="container">-->
-    <!--<div class="form-group col-sm-8">-->
-        <!--<label for="lInputEmail" class="col-sm-2 col-from-label">Email</label>-->
-        <!--<div class="col-sm-5">-->
-            <!--<input type="text" class="form-control" id="lInputEmail" placeholder="Enter email">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="form-group col-sm-8">-->
-        <!--<label for="lInputPassword" class="col-sm-2 col-from-label">Password</label>-->
-        <!--<div class="col-sm-5">-->
-            <!--<input type="password" class="form-control" id="lInputPassword" placeholder="Password">-->
-        <!--</div>-->
-    <!--</div>-->
+<div class="container">
+    <div class="form-group col-sm-8">
+        <label for="lInputEmail" class="col-sm-2 col-from-label">Email</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="lInputEmail" placeholder="Enter email">
+        </div>
+    </div>
+    <div class="form-group col-sm-8">
+        <label for="lInputPassword" class="col-sm-2 col-from-label">Password</label>
+        <div class="col-sm-8">
+            <input type="password" class="form-control" id="lInputPassword" placeholder="Password">
+        </div>
+    </div>
 
-    <!--<div class="form-group col-sm-8">-->
-        <!--<button type="button" class="btn btn-primary col-sm-2 ml-3" id="login">Log in</button>-->
-    <!--</div>-->
-<!--</div>-->
-<div class="form-group col-sm-8" align="center">
-    <button type="button" class="btn btn-primary col-sm-2 ml-3" id="play">Play</button>
+    <div class="form-group col-sm-8">
+        <button type="button" class="btn btn-primary col-sm-3 ml-3" id="login">Log in</button>
+    </div>
+
+    <div data-bind="visible:isVisible">
+        <p>
+            <a href="forgotPassword.html" style="color: red" class="ml-5">     Forgot password?</a>
+        </p>
+    </div>
 </div>
 </body>
 </html>

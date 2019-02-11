@@ -6,10 +6,10 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({
-                email: $('#lInputEmail').val(),
-                password: $('#lInputPassword').val()
-            }),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "Basic " +
+                    btoa($('#lInputEmail').val() + ":" + $('#lInputPassword').val()));
+            },
             success: function (data) {
                 sessionStorage.setItem("token", data.message);
                 sessionStorage.setItem("email", data.email);
@@ -22,35 +22,15 @@ $(document).ready(function () {
                     window.location = '../user/dashboard.html';
                 },
             error: function (jqXHR) {
-                alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
+                alert(jqXHR.status+'  -  '+jqXHR.statusText);
+                vewModel.isVisible(true);
             }
         })
     });
 
-    $('#play').click(function () {
-        $.ajax("/api/guest/log-in", {
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            // data: JSON.stringify({
-            //     email: $('#lInputEmail').val(),
-            //     password: $('#lInputPassword').val()
-            // }),
-            success: function (data) {
-                sessionStorage.setItem("token", data.message);
-                sessionStorage.setItem("email", data.email);
-                sessionStorage.setItem("rateSilver", data.rateSilver);
-                sessionStorage.setItem("rateGold", data.rateGold);
-                sessionStorage.setItem("price", data.price);
-                if (data.role === "ADMIN")
-                    window.location = '../admin/addFabric.html';
-                else
-                    window.location = '../user/dashboard.html';
-            },
-            error: function (jqXHR) {
-                console.log("AAAAAAAAAA! ERROR!!! AAAAAAAAAAAAAAAAAAAAA!");
-                alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
-            }
-        })
-    });
+    var vewModel = {
+        isVisible: ko.observable(false)
+    };
+
+    ko.applyBindings(vewModel);
 });

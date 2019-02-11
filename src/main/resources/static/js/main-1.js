@@ -2,25 +2,6 @@ $(document).ready(function () {
 
     console.log("Hello main-1.js");
 
-    let userInafo = function (data) {
-        document.getElementById('userName').innerHTML = '<text>' + data.name + ':</text>';
-        document.getElementById('silverBal').innerHTML = '<text>Silver balance - ' + data.silverBalance + ';</text>';
-        document.getElementById('goldBal').innerHTML = '<text>Gold balance - ' + data.goldBalance + ';</text>';
-        document.getElementById('increase').innerHTML = '<text>Increase per second - ' + data.increase + ';</text>';
-    };
-
-    let usersInafo = function (data) {
-        $('#usersList').html('');
-        let list;
-        data.forEach(function (item) {
-            list = '<li>';
-            list += item.name + ' - ';
-            list += item.silverBalance + ';';
-            list += '</li>';
-            $('#usersList').append(list);
-        })
-    };
-
     let getUsersInfo = function () {
         $.ajax('/api/user/dashboard', {
             type: 'GET',
@@ -28,14 +9,42 @@ $(document).ready(function () {
             contentType: 'application/json',
             headers: {token: sessionStorage.getItem("token")},
             success: function (data) {
-                userInafo(data.user);
-                usersInafo(data.users)
+                model.userInfo = data.user;
+                model.usersInfo = data.users;
+                initialize();
             },
             error: function (jqXHR) {
                 alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
             },
         });
     };
+
+    var Vm = function (model) {
+        this.model = model;
+        var self = this;
+
+        this.name = ko.observable('');
+        this.silverBalance = ko.observable('');
+        this.goldBalance = ko.observable('');
+        this.increase = ko.observable('');
+
+        this.userInfo = ko.observableArray();
+        this.usersInfo = ko.observableArray();
+
+        initialize = function () {
+            self.userInfo(self.model.userInfo);
+            self.usersInfo(self.model.usersInfo);
+        }
+    };
+
+    var Model = function () {
+        this.userInfo = [];
+        this.usersInfo = [];
+
+    };
+
+    var model = new Model();
+    ko.applyBindings(new Vm(model));
 
     $('#logOut').click(function () {
         sessionStorage.clear();

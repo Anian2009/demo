@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -99,6 +100,47 @@ public class RegistrationController extends SpecialTasks {
         }
     }
 
+    @PostMapping("api/guest/forgotPassword")
+    public ResponseEntity<Map<String, Object>> forgotPassword(@RequestBody Map<String, String> body) {
+        Map<String, Object> response = new HashMap<>();
+        Users user = usersRepository.findByEmail(body.get("email"));
+        if ( user == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "The database does not contain information about the specified e-mail account.");
+        } else {
+            String message = String.format(
+                    "Hello %s! \n" +
+                            "If you want to change the access password, go to the specified link. \n" +
+                            " %s/changePassword.html?code=%s",
+                    user.getName(), adress, user.getToken());
+            try {
+                mailSender.send(user.getEmail(), "Change password", message);
+            } catch (MailSendException ex) {
+                System.out.println(ex.getMessage());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        body.get("email") + " - Account was suspended due to inactivity");
+            }
+            response.put("message", "A message was sent to your email with further instructions");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("api/guest/changePassword")
+    public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String, String> body) {
+        Map<String, Object> response = new HashMap<>();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+        Users user = usersRepository.findByToken(body.get("code"));
+        if ( user == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "The database does not contain information about the specified e-mail account.");
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(body.get("password")));
+            user.setToken(md5Hex(body.get("password") + user.getName()));
+            usersRepository.save(user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
     @PutMapping("activation-code/{code}")
     public ResponseEntity<Map<String, Object>> activationCode(@PathVariable String code) {
         Map<String, Object> response = new HashMap<>();
@@ -108,6 +150,18 @@ public class RegistrationController extends SpecialTasks {
             usersRepository.save(user);
             response.put("message", "Activation completed successfully. " +
                     "You can enter the game using your email address and password");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "A user with such an activation key was not found in the database.");
+        }
+    }
+
+    @PutMapping("changePasswordCode/{code}")
+    public ResponseEntity<Map<String, Object>> changePasswordCode(@PathVariable String code) {
+        Map<String, Object> response = new HashMap<>();
+        Users user = usersRepository.findByToken(code);
+        if (user != null) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
