@@ -81,7 +81,6 @@ public class GuestControllerTest extends ReadFromFile {
         JSONAssert.assertEquals(readFromFile("src/test/resources/responseToLogin.json"), response.getBody(), false);
 
         verify(usersRepository).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
@@ -105,8 +104,6 @@ public class GuestControllerTest extends ReadFromFile {
         verify(usersRepository).findByEmail("SomeUser@some.net");
         verify(mailSender).send(eq("SomeUser@some.net"),eq("Activation code"),anyString());
         verify(usersRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(mailSender);
     }
 
     @Test
@@ -122,9 +119,6 @@ public class GuestControllerTest extends ReadFromFile {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         JSONAssert.assertEquals("{\"message\":\"E-mail incorrectly written.\"}",
                 response.getBody(), false);
-
-        verifyZeroInteractions(usersRepository);
-        verifyZeroInteractions(mailSender);
     }
 
     @Test
@@ -144,8 +138,6 @@ public class GuestControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByEmail("SomeUser@some.net");
-        verifyNoMoreInteractions(usersRepository);
-        verifyZeroInteractions(mailSender);
     }
 
     @Test
@@ -164,7 +156,6 @@ public class GuestControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByActivationCode("SomeCode");
         verify(usersRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
@@ -181,7 +172,6 @@ public class GuestControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByActivationCode("SomeElseCode");
-        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
@@ -198,7 +188,6 @@ public class GuestControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByActivationCode("SomeCode");
-        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
@@ -283,7 +272,6 @@ public class GuestControllerTest extends ReadFromFile {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         verify(usersRepository).findByToken("some-code");
-        verifyNoMoreInteractions(usersRepository);
     }
 
     @Test
@@ -298,6 +286,5 @@ public class GuestControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("some-wrong-code");
-        verifyNoMoreInteractions(usersRepository);
     }
 }

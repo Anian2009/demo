@@ -136,7 +136,5 @@ public class AdminControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("admin-token");
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(fabricsRepository);
     }
 }
