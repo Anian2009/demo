@@ -24,7 +24,7 @@ import java.util.UUID;
 import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 
 @RestController
-public class RegistrationController extends SpecialTasks {
+public class GuestController extends SpecialTasks {
 
     @Value("${exchange.rateGold}")
     private Integer rateGold;
@@ -43,7 +43,7 @@ public class RegistrationController extends SpecialTasks {
     private final MailSender mailSender;
 
     @Autowired
-    public RegistrationController(UsersRepository usersRepository, MailSender mailSender) {
+    public GuestController(UsersRepository usersRepository, MailSender mailSender) {
         this.usersRepository = usersRepository;
         this.mailSender = mailSender;
     }
@@ -100,6 +100,22 @@ public class RegistrationController extends SpecialTasks {
         }
     }
 
+    @PutMapping("activation-code/{code}")
+    public ResponseEntity<Map<String, Object>> activationCode(@PathVariable String code) {
+        Map<String, Object> response = new HashMap<>();
+        Users user = usersRepository.findByActivationCode(code);
+        if (user != null) {
+            user.setActivationCode("true");
+            usersRepository.save(user);
+            response.put("message", "Activation completed successfully. " +
+                    "You can enter the game using your email address and password.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "A user with such an activation key was not found in the database.");
+        }
+    }
+
     @PostMapping("api/guest/forgotPassword")
     public ResponseEntity<Map<String, Object>> forgotPassword(@RequestBody Map<String, String> body) {
         Map<String, Object> response = new HashMap<>();
@@ -120,8 +136,20 @@ public class RegistrationController extends SpecialTasks {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         body.get("email") + " - Account was suspended due to inactivity");
             }
-            response.put("message", "A message was sent to your email with further instructions");
+            response.put("message", "A message was sent to your email with further instructions.");
             return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PutMapping("changePasswordCode/{code}")
+    public ResponseEntity<Map<String, Object>> changePasswordCode(@PathVariable String code) {
+        Map<String, Object> response = new HashMap<>();
+        Users user = usersRepository.findByToken(code);
+        if (user != null) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "A user with such an activation key was not found in the database.");
         }
     }
 
@@ -138,34 +166,6 @@ public class RegistrationController extends SpecialTasks {
             user.setToken(md5Hex(body.get("password") + user.getName()));
             usersRepository.save(user);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-    }
-
-    @PutMapping("activation-code/{code}")
-    public ResponseEntity<Map<String, Object>> activationCode(@PathVariable String code) {
-        Map<String, Object> response = new HashMap<>();
-        Users user = usersRepository.findByActivationCode(code);
-        if (user != null) {
-            user.setActivationCode("true");
-            usersRepository.save(user);
-            response.put("message", "Activation completed successfully. " +
-                    "You can enter the game using your email address and password");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "A user with such an activation key was not found in the database.");
-        }
-    }
-
-    @PutMapping("changePasswordCode/{code}")
-    public ResponseEntity<Map<String, Object>> changePasswordCode(@PathVariable String code) {
-        Map<String, Object> response = new HashMap<>();
-        Users user = usersRepository.findByToken(code);
-        if (user != null) {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "A user with such an activation key was not found in the database.");
         }
     }
 }

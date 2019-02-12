@@ -1,0 +1,21 @@
+body{
+    background: url("../immage/main_fon22.gif") repeat center center fixed;
+    background-size: contain;
+}
+.hiddenText{
+    color: #a9a9a9;
+}
+/*#heder {*/
+    /*color: yellow;*/
+/*}*/
+/*.topOfTop{*/
+    /*margin-top: 15%;*/
+    /*text-align:  center;*/
+/*}*/
+
+/*.topOfTop h3 {*/
+    /*color: greenyellow*/
+/*}*/
+.col ol{
+    font-size: 85%
+}

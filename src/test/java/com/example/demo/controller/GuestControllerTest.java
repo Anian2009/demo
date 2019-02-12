@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("registrationControllerMockProfile")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RegistrationControllerTest extends ReadFromFile {
+public class GuestControllerTest extends ReadFromFile {
 
     @Value("${exchange.rateGold}")
     private Integer rateGold;
@@ -151,7 +151,6 @@ public class RegistrationControllerTest extends ReadFromFile {
     @Test
     public void activateCode() throws JSONException {
         userForTest.setActivationCode("SomeCode");
-        userForTest.setPassword("somePassword");
 
         Mockito.when(usersRepository.findByActivationCode(anyString())).thenReturn(userForTest);
         Mockito.when(usersRepository.save(any())).thenReturn(userForTest);
@@ -161,7 +160,7 @@ public class RegistrationControllerTest extends ReadFromFile {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         JSONAssert.assertEquals("{\"message\":\"Activation completed successfully. " +
-                        "You can enter the game using your email address and password\"}", response.getBody(), false);
+                        "You can enter the game using your email address and password.\"}", response.getBody(), false);
 
         verify(usersRepository).findByActivationCode("SomeCode");
         verify(usersRepository).save(any());
@@ -199,6 +198,106 @@ public class RegistrationControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByActivationCode("SomeCode");
+        verifyNoMoreInteractions(usersRepository);
+    }
+
+    @Test
+    public void getForgotPassword() throws JSONException {
+        Map<String, String> request = new HashMap<>();
+        request.put("email", "SomeUser@some.net");
+
+        Mockito.when(usersRepository.findByEmail(anyString())).thenReturn(userForTest);
+        Mockito.when(mailSender.send(anyString(),anyString(),anyString())).thenReturn("send");
+
+        ResponseEntity<String> response = rest.exchange("/api/guest/forgotPassword?email=SomeUser@some.net",
+                HttpMethod.POST, new HttpEntity<>(request,null), String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        JSONAssert.assertEquals("{\"message\":\"A message was sent to your email with further instructions.\"}",
+                response.getBody(), false);
+
+        verify(usersRepository).findByEmail("SomeUser@some.net");
+        verify(mailSender).send(eq("SomeUser@some.net"),eq("Change password"),anyString());
+    }
+
+    @Test
+    public void tryForgotPasswordWithWrongEmail() throws JSONException {
+        Map<String, String> request = new HashMap<>();
+        request.put("email", "SomeWrongEmail@some.net");
+
+        Mockito.when(usersRepository.findByEmail(anyString())).thenReturn(null);
+
+        ResponseEntity<String> response = rest.exchange("/api/guest/forgotPassword",
+                HttpMethod.POST, new HttpEntity<>(request,null), String.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        JSONAssert.assertEquals("{\"message\":\"The database does not contain information about the specified e-mail account.\"}",
+                response.getBody(), false);
+
+        verify(usersRepository).findByEmail("SomeWrongEmail@some.net");
+    }
+
+    @Test
+    public void changePassword() {
+        Map<String, String> request = new HashMap<>();
+        request.put("code", "user-token");
+        request.put("password", "someNewPassword");
+
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(userForTest);
+        Mockito.when(usersRepository.save(any())).thenReturn(userForTest);
+
+        ResponseEntity<String> response = rest.exchange("/api/guest/changePassword",
+                HttpMethod.POST, new HttpEntity<>(request,null), String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        verify(usersRepository).findByToken("user-token");
+        verify(usersRepository).save(any());
+    }
+
+    @Test
+    public void tryChangePasswordWithWrongCode() throws JSONException {
+        Map<String, String> request = new HashMap<>();
+        request.put("code", "wrong-code");
+        request.put("password", "someNewPassword");
+
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(null);
+
+        ResponseEntity<String> response = rest.exchange("/api/guest/changePassword",
+                HttpMethod.POST, new HttpEntity<>(request,null), String.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        JSONAssert.assertEquals("{\"message\":\"The database does not contain information about the specified e-mail account.\"}",
+                response.getBody(), false);
+
+        verify(usersRepository).findByToken("wrong-code");
+    }
+
+    @Test
+    public void getChangePasswordCode(){
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(userForTest);
+
+        ResponseEntity<String> response = rest.exchange("/changePasswordCode/some-code", HttpMethod.PUT,
+                new HttpEntity<>(null), String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        verify(usersRepository).findByToken("some-code");
+        verifyNoMoreInteractions(usersRepository);
+    }
+
+    @Test
+    public void tryChangePasswordCodeWithWrongCode() throws JSONException {
+        Mockito.when(usersRepository.findByToken(anyString())).thenReturn(null);
+
+        ResponseEntity<String> response = rest.exchange("/changePasswordCode/some-wrong-code", HttpMethod.PUT,
+                new HttpEntity<>(null), String.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        JSONAssert.assertEquals("{\"message\":\"A user with such an activation key was not found in the database.\"}",
+                response.getBody(), false);
+
+        verify(usersRepository).findByToken("some-wrong-code");
         verifyNoMoreInteractions(usersRepository);
     }
 }

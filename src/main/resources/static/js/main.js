@@ -2,58 +2,6 @@ $(document).ready(function () {
 
     console.log("Hello main.js");
 
-    function upgradeThisFabric(id) {
-        $.ajax('/api/user/upgrade-factory/'+id, {
-            type: 'PUT',
-            dataType: 'json',
-            contentType: 'application/json',
-            headers: {token: sessionStorage.getItem("token")},
-            success: function (data) {
-                showMyFabric(data.fabrics);
-                alert("Congratulations! You upgraded the plant. Your profit is increasing.");
-            },
-            error: function (jqXHR) {
-                alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
-            },
-        })
-    }
-
-    function showMyFabric(data) {
-        $('#user-card').html('');
-        let cardData;
-        data.forEach(function (item) {
-            cardData = '<div class="card text-white bg-dark mb-3">';
-            cardData += '<img class="card-img-top" height="200" src=' + item.img + ' alt=' + item.img + '>';
-            cardData += '<div class="card-body">';
-            cardData += '<h5 class="card-title"> ' + item.name + ' :</h5>';
-            cardData += '<div class="card-text">mining per second - ' + item.miningPerSecond + ' ;</div>';
-            cardData += '<div class="card-text">level - ' + item.fabricLevel + ' ;</div>';
-            cardData += '<div class="card-text">upgrade price - ' + item.upgrade + ' ;</div>';
-            cardData += '<p></p><a id="' + item.id + '" name="up' + item.id + '" class="btn btn-primary">Upgrade</a>';
-            cardData += '</div>';
-            cardData += '</div>';
-            $('#user-card').append(cardData);
-        })
-    }
-
-    $(document).on('click', 'a[name^="up"]', function (e) {
-        e.preventDefault();
-        upgradeThisFabric(this.id);
-    });
-
-    $.ajax('/api/user/myFabric', {
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json',
-        headers: {token: sessionStorage.getItem("token")},
-        success: function (data) {
-            showMyFabric(data.fabrics);
-        },
-        error: function (jqXHR) {
-            alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
-        },
-    });
-
     // Stripes. card verification; Creating and sending card token to server
     function sendToken(token) {
         $.ajax('/api/user/buy-gold-status', {

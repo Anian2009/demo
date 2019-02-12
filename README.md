@@ -394,3 +394,63 @@ Response 400
         "message": "A user with such an activation key was not found in the database.",
         "path": "activation-code/code"
     }
+
+- ### Verify that the e-mail address you entered is registered in the database
+
+POST `/api/guest/forgotPassword`
+
+    DATA: {
+            "email": "SomeUser@some.net"
+          }
+
+Response 200 - A letter with instructions on how to reset the password is sent to the specified email address
+
+      {
+        "message":"A message was sent to your email with further instructions"
+      }
+      
+Response 400, 404
+
+    {
+        "timestamp": "2019-02-05T18:27:50.153+0000",
+        "status": 400,
+        "error": "Bad Request",
+        "message": "The database does not contain information about the specified e-mail account.",
+        "path": "/api/guest/registration"
+    }
+    
+- ### Activation password change link
+
+PUT `changePasswordCode/{code}`
+
+Response 200 - If the specified code matches the entries in the database, you must change the password
+      
+Response 404
+
+    {
+        "timestamp": "2019-02-05T18:27:50.153+0000",
+        "status": 400,
+        "error": "Bad Request",
+        "message": "The database does not contain information about the specified e-mail account.",
+        "path": "activation-code/code"
+    }
+- ### Change password
+
+POST `/api/guest/changePassword`
+
+    DATA: {
+            "password": "newPassword",
+            "token": "user-token"
+          }
+
+Response 200  - The password has been changed
+      
+Response 404
+
+    {
+        "timestamp": "2019-02-05T18:27:50.153+0000",
+        "status": 400,
+        "error": "Bad Request",
+        "message": "The database does not contain information about the specified e-mail account.",
+        "path": "/api/guest/registration"
+    }

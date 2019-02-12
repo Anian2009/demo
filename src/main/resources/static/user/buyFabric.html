@@ -5,6 +5,7 @@
     <title>Oligarch</title>
 
     <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/jquery-3.3.1.js"></script>
+    <link href="../css/style2.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -17,7 +18,7 @@
     <script language="JavaScript" type='text/javascript' src='../js/jsLibrary/knockout-3.4.2.js'></script>
 
 </head>
-<body background="../immage/main_fon22.gif">
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">"OLIGARCH"</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -49,7 +50,7 @@
                     <div align="center">Leader list</div>
                 </h4>
                 <hr>
-                <ol style="font-size: 75%" data-bind="foreach: usersInfo">
+                <ol data-bind="foreach: usersInfo">
                     <div>
                         <span data-bind="text: name"></span>
                         <span> - </span>
@@ -90,7 +91,7 @@
                 <!--Fabrics-->
             </div>
             <div class="col" id="liderDashboard">
-                <div data-bind="foreach: userInfo" style="font-size: 100%">
+                <div data-bind="foreach: userInfo">
                     <hr>
                     <h4 data-bind="text: name"></h4>
                     <div>

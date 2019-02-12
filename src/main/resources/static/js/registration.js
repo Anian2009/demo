@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     console.log("Hello registration.js");
 
     $('#add_user').click(function () {
