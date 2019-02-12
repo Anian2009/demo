@@ -110,8 +110,6 @@ public class DashboardControllerTest extends ReadFromFile {
 
         verify(usersRepository).findAll();
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(userFabricsRepository);
     }
 
     @Test
@@ -135,8 +133,6 @@ public class DashboardControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByToken("user-token");
         verify(userFabricsRepository).findByMaster(userFoTest.getId());
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(userFabricsRepository);
     }
 
     @Test
@@ -172,9 +168,7 @@ public class DashboardControllerTest extends ReadFromFile {
         JSONAssert.assertEquals(readFromFile("src/test/resources/responseToFactoryMarketList.json"), response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
         verify(fabricsRepository).findAll();
-        verifyNoMoreInteractions(usersRepository);
 
     }
 
@@ -205,9 +199,6 @@ public class DashboardControllerTest extends ReadFromFile {
         verify(usersRepository).save(any());
         verify(fabricsRepository).findById(1);
         verify(userFabricsRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
-        verifyNoMoreInteractions(fabricsRepository);
-        verifyNoMoreInteractions(userFabricsRepository);
     }
 
     @Test
@@ -229,10 +220,8 @@ public class DashboardControllerTest extends ReadFromFile {
         JSONAssert.assertEquals("{\"message\":\"The user lacks money.\"}", response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
         verify(fabricsRepository).findById(1);
-        verifyNoMoreInteractions(fabricsRepository);
-        verifyZeroInteractions(userFabricsRepository);
+
     }
 
 
@@ -252,10 +241,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
         verify(fabricsRepository).findById(5);
-        verifyNoMoreInteractions(fabricsRepository);
-        verifyZeroInteractions(userFabricsRepository);
     }
 
     @Test
@@ -284,12 +270,9 @@ public class DashboardControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByToken("user-token");
         verify(usersRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
         verify(userFabricsRepository).findById(2);
         verify(userFabricsRepository).save(any());
         verify(userFabricsRepository).findByMaster(userFoTest.getId());
-        verifyNoMoreInteractions(userFabricsRepository);
-        verifyZeroInteractions(fabricsRepository);
     }
 
     @Test
@@ -314,10 +297,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
         verify(userFabricsRepository).findById(2);
-        verifyNoMoreInteractions(userFabricsRepository);
-        verifyZeroInteractions(fabricsRepository);
     }
 
     @Test
@@ -333,10 +313,7 @@ public class DashboardControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
         verify(userFabricsRepository).findById(10);
-        verifyNoMoreInteractions(userFabricsRepository);
-        verifyZeroInteractions(fabricsRepository);
     }
 
     @Test
@@ -355,9 +332,6 @@ public class DashboardControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByToken("user-token");
         verify(usersRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
-        verifyZeroInteractions(fabricsRepository);
-        verifyZeroInteractions(userFabricsRepository);
     }
 
     @Test
@@ -376,9 +350,6 @@ public class DashboardControllerTest extends ReadFromFile {
 
         verify(usersRepository).findByToken("user-token");
         verify(usersRepository).save(any());
-        verifyNoMoreInteractions(usersRepository);
-        verifyZeroInteractions(fabricsRepository);
-        verifyZeroInteractions(userFabricsRepository);
 
     }
 
@@ -396,9 +367,6 @@ public class DashboardControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
-        verifyZeroInteractions(fabricsRepository);
-        verifyZeroInteractions(userFabricsRepository);
     }
 
     @Test
@@ -416,8 +384,5 @@ public class DashboardControllerTest extends ReadFromFile {
                 response.getBody(), false);
 
         verify(usersRepository).findByToken("user-token");
-        verifyNoMoreInteractions(usersRepository);
-        verifyZeroInteractions(fabricsRepository);
-        verifyZeroInteractions(userFabricsRepository);
     }
 }
