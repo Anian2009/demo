@@ -1,5 +1,5 @@
 body{
-    background: url("../immage/main_fon.gif") repeat-x center center fixed;
+    background: url("../immage/fon.gif") repeat center center fixed;
     background-size: contain;
 }
 #heder {
