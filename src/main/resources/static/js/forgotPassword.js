@@ -1,27 +1,35 @@
 $(document).ready(function () {
-    console.log("Hello login.js");
 
-    $('#send').click(function () {
-        $.ajax("/api/guest/forgotPassword", {
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                email: $('#inputEmail').val()
-            }),
-            success: function () {
-                vewModel.isVisible(true);
-                $('#inputEmail').val(null);
+    console.log("Hello forgotPassword.js");
+
+    var VewModel = function () {
+        var self = this;
+
+        this.isVisible = ko.observable(false);
+        this.userName = ko.observable('');
+        this.dis = ko.observable(false);
+
+        this.submitButton = function () {
+            console.log('Submit start');
+            $.ajax("/api/guest/forgotPassword", {
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    email: self.userName()
+                }),
+                success: function () {
+                    $('#myModal').modal('show');
+                    self.dis(true);
                 },
-            error: function (jqXHR) {
-                alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
-            },
-        })
-    });
+                error: function (jqXHR) {
+                    alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
+                    self.userName('');
+                },
+            })
+        }
 
-    var vewModel = {
-        isVisible: ko.observable(false)
     };
 
-    ko.applyBindings(vewModel);
+    ko.applyBindings(new VewModel());
 });

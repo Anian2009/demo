@@ -1,5 +1,5 @@
 body{
-    background: url("../immage/fon.gif") repeat center center fixed;
+    background: url("../immage/main_fon.gif") repeat center center fixed;
     background-size: contain;
 }
 #heder {
@@ -8,8 +8,4 @@ body{
 .topOfTop{
     margin-top: 15%;
     text-align:  center;
-}
-
-.topOfTop h3 {
-    color: greenyellow
 }
