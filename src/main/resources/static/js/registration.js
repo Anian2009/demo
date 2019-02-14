@@ -2,37 +2,57 @@ $(document).ready(function () {
 
     console.log("Hello registration.js");
 
-    $('#add_user').click(function () {
+    var ViewModel = function () {
+        var self = this;
 
-        var pas = $('#InputPassword').val().replace(/\s/g, '');
-        var pas1 = $('#InputPassword2').val().replace(/\s/g, '');
-        var name = $('#InputName').val().replace(/\s/g, '');
-        var email = $('#InputEmail').val().replace(/\s/g, '');
-        if (pas != pas1) {
+        this.userName = ko.observable('');
+        this.userNick = ko.observable('');
+        this.userPassword1 = ko.observable('');
+        this.userPassword2 = ko.observable('');
+
+        this.registration = function () {
+
+            if (validate(this.userName(), this.userNick(), this.userPassword1(), this.userPassword2())) {
+
+                $.ajax("/api/guest/registration", {
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name:  this.userNick(),
+                        email: this.userName(),
+                        password: this.userPassword1()
+                    }),
+                    success: function () {
+                        $('#myModal').modal('show');
+                        self.userName('');
+                        self.userNick('');
+                        self.userPassword1('');
+                        self.userPassword2('');
+                    },
+                    error: function (jqXHR) {
+                        alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
+                    },
+                })
+            }
+        }
+    };
+
+    validate = function(email, name, password1, password2){
+        email = email.replace(/\s/g, '');
+        name = name.replace(/\s/g, '');
+        password1 = password1.replace(/\s/g, '');
+        password2 = password2.replace(/\s/g, '');
+        if (password1 !== password2) {
             alert("Invalid password");
             return false;
         }
-        if (pas == "" || name == "" || email == "") {
+        if (password1 === '' || name === '' || email === '') {
             alert("All fields must be filled!");
             return false;
+        } else {
+            return true;
         }
-
-        $.ajax("/api/guest/registration", {
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                name: name,
-                email: email,
-                password: pas
-            }),
-            success: function (data) {
-                window.location = "../message.html";
-            },
-            error: function (jqXHR) {
-                alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
-            },
-        })
-    });
-
+    };
+    ko.applyBindings(new ViewModel());
 });
