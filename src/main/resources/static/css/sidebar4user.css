@@ -75,6 +75,17 @@ ol {
     color: white;
 }
 
+.card-img-overlay {
+    height: 60px;
+}
+
+@media (max-width: 1200px){
+    .card-body a {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+}
+
 @media (max-width: 992px) {
     .icon-menu-left {
         display: block;
@@ -134,15 +145,30 @@ ol {
     .navbar-toggler {
         margin-left: auto;
     }
+
+    .card-body a {
+        background-color: green;
+        border-color: green;
+    }
 }
 @media (max-width: 455px) {
     .unnecessaryLine {
         display: none;
+    }
+
+    .card-body a {
+        background-color: #33fff8;
+        border-color: #33fff8;
     }
 }
 
 @media (max-width: 365px) {
     #tableBuyFabric {
         font-size: 70%;
+    }
+
+    .card-body a {
+        background-color: red;
+        border-color: red;
     }
 }
