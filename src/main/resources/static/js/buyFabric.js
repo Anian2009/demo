@@ -57,7 +57,24 @@ $(document).ready(function () {
             self.fabrics(self.model.fabrics);
             self.userInfo(self.model.userInfo);
             self.usersInfo(self.model.usersInfo);
-        }
+        };
+
+        this.leftMenuButton = function(){
+            $('.sidebar').toggleClass('active-sidebar');
+            $('.content').toggleClass('active-content-right');
+            $('.icon-menu-right').toggleClass('icon-menu-right-action');
+        };
+
+        this.rightMenuButton = function(){
+            $('.user-info').toggleClass('user-info-active');
+            $('.content').toggleClass('active-content-left');
+            $('.icon-menu-left').toggleClass('icon-menu-left-action');
+        };
+
+        this.logOut = function () {
+            sessionStorage.clear();
+            window.location = '../index.html';
+        };
     };
 
     var Model = function () {
@@ -73,7 +90,7 @@ $(document).ready(function () {
                 headers: {token: sessionStorage.getItem("token")},
                 data: JSON.stringify({id: vieModel.id}),
                 success: function (data) {
-                    alert(data.message);
+                    $('#myModal').modal('show');
                 },
                 error: function (jqXHR) {
                     alert(jqXHR.responseJSON.status +" - "+jqXHR.responseJSON.message);
@@ -84,11 +101,6 @@ $(document).ready(function () {
 
     var model = new Model();
     ko.applyBindings(new Vm(model));
-
-    $('#logOut').click(function () {
-        sessionStorage.clear();
-        window.location = '../index.html';
-    });
 
     setInterval(function () {
         getUsersInfo();

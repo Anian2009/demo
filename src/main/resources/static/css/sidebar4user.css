@@ -1,0 +1,132 @@
+.sidebar {
+    float: left;
+    width: 22%;
+    padding: 20px;
+    transition: 1s;
+}
+
+.content {
+    margin-left: 22%;
+    margin-right: 22%;
+    padding: 20px;
+    transition: 1s;
+}
+
+.user-info {
+    float: right;
+    width: 22%;
+    padding: 20px;
+    transition: 1s;
+}
+
+.icon-menu-left {
+    display: none;
+    height: 30px;
+    width: 15px;
+    float: left;
+    padding: 5px 0;
+    cursor: pointer;
+    margin-left: 280px;
+    background: #6c757d;
+    transition: 1s;
+}
+
+.icon-menu-right {
+    display: none;
+    height: 30px;
+    width: 15px;
+    float: left;
+    padding: 5px 0;
+    cursor: pointer;
+    margin-left: -35px;
+    background: #6c757d;
+    transition: 1s;
+}
+
+.divide {
+    display: block;
+    height: 2px;
+    margin: 3px 0;
+    background: red;
+}
+
+.container-fluid {
+    overflow: hidden;
+}
+ol {
+    margin-left: 0;
+}
+
+.sidebar td {
+    line-height: 2px;
+    height: 7px;
+}
+.sidebar tr {
+    line-height: 15px;
+}
+
+.content h5 {
+    color: #a9a9a9;
+}
+
+.card-img-overlay b {
+    background: black;
+    color: white;
+}
+
+@media (max-width: 992px) {
+    .icon-menu-left {
+        display: block;
+    }
+
+    .icon-menu-left-action {
+        transform: translateX(-300px);
+    }
+
+    .icon-menu-right {
+        display: block;
+    }
+
+    .icon-menu-right-action {
+        transform: translateX(300px);
+    }
+
+    .sidebar {
+        position: fixed;
+        width: 300px;
+        left: -300px;
+        height: 200px;
+    }
+
+    .user-info {
+        position: fixed;
+        width: 300px;
+        right: -300px;
+        height: 100%;
+    }
+    .sidebar.active-sidebar {
+        transform: translateX(300px);
+    }
+
+    .user-info-active {
+        transform: translateX(-300px);
+    }
+
+    .active-content-right {
+        transform: translateX(300px);
+    }
+
+    .active-content-left {
+        transform: translateX(-300px);
+    }
+
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+    }
+
+    .navbar-toggler {
+        margin-left: auto;
+    }
+}
