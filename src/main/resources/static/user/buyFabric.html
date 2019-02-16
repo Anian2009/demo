@@ -43,13 +43,18 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="icon-menu-left" data-bind="click: leftMenuButton">
+        <span class="divide"></span>
+        <span class="divide"></span>
+        <span class="divide"></span>
+    </div>
+    <div class="icon-menu-right" data-bind="click: rightMenuButton">
+        <span class="divide"></span>
+        <span class="divide"></span>
+        <span class="divide"></span>
+    </div>
 
     <div class="sidebar">
-        <div class="icon-menu-left" data-bind="click: leftMenuButton">
-            <span class="divide"></span>
-            <span class="divide"></span>
-            <span class="divide"></span>
-        </div>
         <hr>
         <h4 class="text-center">Leader list</h4>
         <hr>
@@ -70,12 +75,6 @@
     </div>
 
     <div class="user-info">
-
-        <div class="icon-menu-right" data-bind="click: rightMenuButton">
-            <span class="divide"></span>
-            <span class="divide"></span>
-            <span class="divide"></span>
-        </div>
 
         <div data-bind="foreach: userInfo">
             <hr>

@@ -3,6 +3,7 @@
     width: 22%;
     padding: 20px;
     transition: 1s;
+    position: fixed;
 }
 
 .content {
@@ -26,7 +27,7 @@
     float: left;
     padding: 5px 0;
     cursor: pointer;
-    margin-left: 280px;
+    margin-left: -15px;
     background: #6c757d;
     transition: 1s;
 }
@@ -35,12 +36,12 @@
     display: none;
     height: 30px;
     width: 15px;
-    float: left;
+    float: right;
     padding: 5px 0;
     cursor: pointer;
-    margin-left: -35px;
     background: #6c757d;
     transition: 1s;
+    margin-right: -15px;
 }
 
 .divide {
@@ -88,28 +89,32 @@ ol {
     }
 
     .icon-menu-right-action {
-        transform: translateX(300px);
+        transform: translateX(250px);
     }
 
     .sidebar {
-        position: fixed;
+        /*position: fixed;*/
         width: 300px;
         left: -300px;
-        height: 200px;
+        height: 80%;
+        overflow: auto;
+        margin-top: 30px;
     }
 
     .user-info {
         position: fixed;
-        width: 300px;
-        right: -300px;
-        height: 100%;
+        width: 250px;
+        right: -250px;
+        height: 85%;
+        margin-top: 30px;
+        overflow: scroll;
     }
     .sidebar.active-sidebar {
         transform: translateX(300px);
     }
 
     .user-info-active {
-        transform: translateX(-300px);
+        transform: translateX(-250px);
     }
 
     .active-content-right {
@@ -117,7 +122,7 @@ ol {
     }
 
     .active-content-left {
-        transform: translateX(-300px);
+        transform: translateX(-250px);
     }
 
     .content {
