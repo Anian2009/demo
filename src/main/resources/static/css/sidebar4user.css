@@ -51,7 +51,7 @@
 }
 
 .container-fluid {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 ol {
     margin-left: 0;
@@ -128,5 +128,16 @@ ol {
 
     .navbar-toggler {
         margin-left: auto;
+    }
+}
+@media (max-width: 455px) {
+    .unnecessaryLine {
+        display: none;
+    }
+}
+
+@media (max-width: 365px) {
+    #tableBuyFabric {
+        font-size: 70%;
     }
 }

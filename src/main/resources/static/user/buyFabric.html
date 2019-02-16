@@ -104,12 +104,12 @@
     <div class="content">
 
         <h3 align="center">Fabrics ich you can bay</h3>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="tableBuyFabric">
             <thead>
             <tr align="center">
                 <th>Factory name</th>
                 <th>Price</th>
-                <th>Upgrade costs</th>
+                <th class="unnecessaryLine">Upgrade costs</th>
                 <th>Mining per second</th>
                 <th></th>
             </tr>
@@ -118,7 +118,7 @@
             <tr align="center">
                 <td data-bind="text: fabricName"></td>
                 <td data-bind="text: price"></td>
-                <td data-bind="text: upgrade"></td>
+                <td class="unnecessaryLine" data-bind="text: upgrade"></td>
                 <td data-bind="text: miningPerSecond"></td>
                 <td>
                     <button class="btn btn-primary btn-sm" data-bind="click: $parent.buyFabric">Buy
