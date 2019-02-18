@@ -23,25 +23,27 @@
 .icon-menu-left {
     display: none;
     height: 30px;
-    width: 15px;
+    width: 30px;
     float: left;
-    padding: 5px 0;
+    padding: 5px 5px;
     cursor: pointer;
-    margin-left: -15px;
+    margin-left: -18px;
     background: #6c757d;
     transition: 1s;
+    border-radius: 3px;
 }
 
 .icon-menu-right {
     display: none;
     height: 30px;
-    width: 15px;
+    width: 30px;
     float: right;
-    padding: 5px 0;
+    padding: 5px 5px;
     cursor: pointer;
     background: #6c757d;
     transition: 1s;
-    margin-right: -15px;
+    margin-right: -18px;
+    border-radius: 3px;
 }
 
 .divide {
