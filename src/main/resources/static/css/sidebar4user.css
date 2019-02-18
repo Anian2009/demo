@@ -1,61 +1,8 @@
-.sidebar {
-    float: left;
-    width: 22%;
-    padding: 20px;
-    transition: 1s;
-    position: fixed;
-}
-
-.content {
-    margin-left: 22%;
-    margin-right: 22%;
-    padding: 20px;
-    transition: 1s;
-}
-
-.user-info {
-    float: right;
-    width: 22%;
-    padding: 20px;
-    transition: 1s;
-}
-
-.icon-menu-left {
-    display: none;
-    height: 30px;
-    width: 30px;
-    float: left;
-    padding: 5px 5px;
-    cursor: pointer;
-    margin-left: -18px;
-    background: #6c757d;
-    transition: 1s;
-    border-radius: 3px;
-}
-
-.icon-menu-right {
-    display: none;
-    height: 30px;
-    width: 30px;
-    float: right;
-    padding: 5px 5px;
-    cursor: pointer;
-    background: #6c757d;
-    transition: 1s;
-    margin-right: -18px;
-    border-radius: 3px;
-}
-
-.divide {
-    display: block;
-    height: 2px;
-    margin: 3px 0;
-    background: red;
-}
 
 .container-fluid {
     overflow-x: hidden;
 }
+
 ol {
     margin-left: 0;
 }
@@ -64,6 +11,7 @@ ol {
     line-height: 2px;
     height: 7px;
 }
+
 .sidebar tr {
     line-height: 15px;
 }
@@ -81,96 +29,43 @@ ol {
     height: 60px;
 }
 
-@media (max-width: 1200px){
+#iAm {
+    background: #95999c;
+}
+
+.info {
+    color: white;
+}
+
+@media (max-width: 992px) {
     .card-body a {
         background-color: #6f42c1;
         border-color: #6f42c1;
     }
 }
 
-@media (max-width: 992px) {
-    .icon-menu-left {
-        display: block;
-    }
-
-    .icon-menu-left-action {
-        transform: translateX(-300px);
-    }
-
-    .icon-menu-right {
-        display: block;
-    }
-
-    .icon-menu-right-action {
-        transform: translateX(250px);
-    }
-
-    .sidebar {
-        /*position: fixed;*/
-        width: 300px;
-        left: -300px;
-        height: 80%;
-        overflow: auto;
-        margin-top: 30px;
-    }
-
-    .user-info {
-        position: fixed;
-        width: 250px;
-        right: -250px;
-        height: 85%;
-        margin-top: 30px;
-        overflow: scroll;
-    }
-    .sidebar.active-sidebar {
-        transform: translateX(300px);
-    }
-
-    .user-info-active {
-        transform: translateX(-250px);
-    }
-
-    .active-content-right {
-        transform: translateX(300px);
-    }
-
-    .active-content-left {
-        transform: translateX(-250px);
-    }
-
-    .content {
-        margin-left: 0;
-        margin-right: 0;
-        padding: 10px;
-    }
-
-    .navbar-toggler {
-        margin-left: auto;
-    }
-
-    .card-body a {
-        background-color: green;
-        border-color: green;
-    }
-}
-@media (max-width: 455px) {
-    .unnecessaryLine {
-        display: none;
-    }
-
+@media (max-width: 768px) {
     .card-body a {
         background-color: #33fff8;
         border-color: #33fff8;
     }
 }
 
-@media (max-width: 365px) {
-    #tableBuyFabric {
-        font-size: 70%;
-    }
-
+@media (max-width: 576px) {
     .card-body a {
         background-color: red;
         border-color: red;
+    }
+}
+
+@media (max-width: 455px) {
+    .unnecessaryLine {
+        display: none;
+    }
+}
+
+@media (max-width: 365px) {
+    #tableBuyFabric {
+        font-size: 70%;
     }
 }

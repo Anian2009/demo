@@ -9,12 +9,9 @@
     <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
 
     <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-            crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/popper.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/bootstrap.min.js"></script>
+
     <script language="JavaScript" type='text/javascript' src='../js/jsLibrary/knockout-3.4.2.js'></script>
     <script language="JavaScript" type='text/javascript' src='../js/main-1.js'></script>
     <script language="JavaScript" type='text/javascript' src='../js/main.js'></script>
@@ -37,102 +34,93 @@
             <li class="nav-item active">
                 <a href="buyFabric.html" class="nav-link">Buy fabric</a>
             </li>
+            <li class="nav-item">
+                <a href="#" id="customButton" class="nav-link">Buy gold status</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-toggle="modal"
+                   data-target="#currency_exchange">Сurrency exchange</a>
+            </li>
         </ul>
         <button class="btn btn-outline-success my-2 my-sm-0" data-bind="click: logOut">Log out</button>
     </div>
 </nav>
 
-<div class="container-fluid">
-    <div class="icon-menu-left" data-bind="click: leftMenuButton">
-        <span class="divide"></span>
-        <span class="divide"></span>
-        <span class="divide"></span>
-    </div>
-    <div class="icon-menu-right" data-bind="click: rightMenuButton">
-        <span class="divide"></span>
-        <span class="divide"></span>
-        <span class="divide"></span>
-    </div>
-    <div class="sidebar">
-
-        <hr>
-        <h4 class="text-center">Leader list</h4>
-        <hr>
-        <table class="table table-bordered table-striped mt-4">
-            <thead>
-            <tr>
-                <th>User name</th>
-                <th>Silver balance</th>
-            </tr>
-            </thead>
-            <tbody data-bind="foreach: usersInfo">
-            <tr>
-                <td data-bind="text: name"></td>
-                <td data-bind="text: silverBalance"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="user-info">
-
-        <div data-bind="foreach: userInfo">
-            <hr>
-            <h4 data-bind="text: name"></h4>
-            <div>
-                <span>Silver coins - </span>
-                <span data-bind="text: silverBalance"></span>
-                <span>;</span>
-            </div>
-            <div>
-                <span>Gold coins - </span>
-                <span data-bind="text: goldBalance, textInput: goldBalance"></span>
-                <span>;</span>
-            </div>
-            <div>
-                <span>Increase - </span>
-                <span data-bind="text: increase"></span>
-                <span>;</span>
-            </div>
+<div class="container-fluid" >
+    <div class="row" data-bind="foreach: userInfo" id="iAm">
+        <div class="col-lg-3 col-md-12">
+            <strong><strong data-bind="text: name"></strong>:</strong>
         </div>
-        <hr>
-        <p><a href="buyFabric.html" class="badge badge-primary">Buy fabric</a></p>
-        <p><a href="#" id="customButton" class="badge badge-primary">Buy gold status</a>
-        </p>
-        <!--Payment card-->
-        <p><a href="#" id="exchange_link" class="badge badge-primary" data-toggle="modal"
-              data-target="#currency_exchange">Сurrency exchange</a></p>
-        <hr>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <span>Silver - <span class="info" data-bind="text: silverBalance"></span></span>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <span>Gold -  <span class="info" data-bind="text: goldBalance, textInput: goldBalance"></span></span>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <span>Increase - <span class="info" data-bind="text: increase"></span></span>
+        </div>
     </div>
+</div>
 
-    <div class="content">
+<div class="container-fluid">
 
-        <h3 align="center">Your own factories</h3>
-        <h5 align="center" data-bind="visible: myFabrics == 0">This is the main page. All information about your company
-            and
-            factories will be here.</h5>
-        <div class="card-columns" data-bind="foreach: myFabrics">
+    <div class="row">
+        <div class="col-lg-8 col-sm-12">
+            <div class="content">
+                <h3 align="center">Your own factories</h3>
+                <h5 align="center" data-bind="visible: myFabrics == 0">This is the main page. All information about your
+                    company
+                    and
+                    factories will be here.</h5>
+                <div class="card-columns" data-bind="foreach: myFabrics">
 
-            <div class="card text-white bg-dark text-center">
-                <img class="card" data-bind="attr:{src: img}">
-                <div class="card-img-overlay">
-                    <div>
-                        <b>level - <b data-bind="text: fabricLevel"></b></b>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title" data-bind="text: name">Some name of fabric :</h5>
-                    <div class="card-text">
+                    <div class="card text-white bg-dark text-center">
+                        <img class="card" data-bind="attr:{src: img}">
+                        <div class="card-img-overlay">
+                            <div>
+                                <b>level - <b data-bind="text: fabricLevel"></b></b>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" data-bind="text: name">Some name of fabric :</h5>
+                            <div class="card-text">
                         <span>mining -
                         <span data-bind="text: miningPerSecond"></span> sec.
                         </span>
+                            </div>
+                            <a class="btn btn-primary my-2" data-bind="click: $parent.upgradeThisFabric">Upgrade: <span
+                                    data-bind="text: upgrade"></span> coins</a>
+                        </div>
                     </div>
-                    <a class="btn btn-primary my-2" data-bind="click: $parent.upgradeThisFabric">Upgrade: <span
-                            data-bind="text: upgrade"></span> coins</a>
                 </div>
             </div>
         </div>
+        <div class="col-lg-4 offset-lg-0 col-sm-8 offset-sm-2">
+            <div class="sidebar">
+
+                <hr>
+                <h4 class="text-center">Leader list</h4>
+                <hr>
+                <table class="table table-bordered table-striped mt-4">
+                    <thead>
+                    <tr>
+                        <th>User name</th>
+                        <th>Silver balance</th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach: usersInfo">
+                    <tr>
+                        <td data-bind="text: name"></td>
+                        <td data-bind="text: silverBalance"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+
 </div>
 
 <!-- Modal -->
