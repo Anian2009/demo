@@ -5,7 +5,13 @@ body{
 #heder {
     color: yellow;
 }
-.topOfTop{
-    margin-top: 15%;
-    text-align:  center;
+
+#canva {
+    background-color: white;
+}
+
+@media (max-width: 290px) {
+    html {
+        width: 290px;
+    }
 }
