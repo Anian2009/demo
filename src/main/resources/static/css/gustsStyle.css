@@ -5,17 +5,9 @@ body{
 .hiddenText{
 
 }
-/*#heder {*/
-    /*color: yellow;*/
-/*}*/
-/*.topOfTop{*/
-    /*margin-top: 15%;*/
-    /*text-align:  center;*/
-/*}*/
 
-/*.topOfTop h3 {*/
-    /*color: greenyellow*/
-/*}*/
-.col ol{
-    font-size: 85%
+@media (max-width: 290px) {
+    html {
+        width: 290px;
+    }
 }
