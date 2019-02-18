@@ -1,6 +1,7 @@
 body{
-    background: url("../immage/main_fon.gif") repeat center center fixed;
+    background: url("../immage/main_fon.gif") fixed;
     background-size: contain;
+
 }
 #heder {
     color: yellow;
@@ -13,5 +14,11 @@ body{
 @media (max-width: 290px) {
     html {
         width: 290px;
+    }
+}
+
+@media (max-width: 750px) {
+    body {
+        background-size: cover;
     }
 }
