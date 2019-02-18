@@ -9,12 +9,9 @@
     <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
 
     <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-            crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/popper.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../js/jsLibrary/bootstrap.min.js"></script>
+
     <script language="JavaScript" type='text/javascript' src='../js/jsLibrary/knockout-3.4.2.js'></script>
     <script language="JavaScript" type='text/javascript' src='../js/buyFabric.js'></script>
 
@@ -43,91 +40,77 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="icon-menu-left" data-bind="click: leftMenuButton">
-        <span class="divide"></span>
-        <span class="divide"></span>
-        <span class="divide"></span>
-    </div>
-    <div class="icon-menu-right" data-bind="click: rightMenuButton">
-        <span class="divide"></span>
-        <span class="divide"></span>
-        <span class="divide"></span>
-    </div>
-
-    <div class="sidebar">
-        <hr>
-        <h4 class="text-center">Leader list</h4>
-        <hr>
-        <table class="table table-bordered table-striped mt-4">
-            <thead>
-            <tr>
-                <th>User name</th>
-                <th>Silver balance</th>
-            </tr>
-            </thead>
-            <tbody data-bind="foreach: usersInfo">
-            <tr>
-                <td data-bind="text: name"></td>
-                <td data-bind="text: silverBalance"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="user-info">
-
-        <div data-bind="foreach: userInfo">
-            <hr>
-            <h4 data-bind="text: name"></h4>
-            <div>
-                <span>Silver coins - </span>
-                <span data-bind="text: silverBalance"></span>
-                <span>;</span>
-            </div>
-            <div>
-                <span>Gold coins - </span>
-                <span data-bind="text: goldBalance, textInput: goldBalance"></span>
-                <span>;</span>
-            </div>
-            <div>
-                <span>Increase - </span>
-                <span data-bind="text: increase"></span>
-                <span>;</span>
-            </div>
+    <div class="row" data-bind="foreach: userInfo" id="iAm">
+        <div class="col-lg-3 col-md-12">
+            <strong><strong data-bind="text: name"></strong>:</strong>
         </div>
-        <hr>
-        <p><a href="dashboard.html" class="badge badge-primary">Main page</a></p>
-        <hr>
-    </div>
-
-    <div class="content">
-
-        <h3 align="center">Fabrics ich you can bay</h3>
-        <table class="table table-bordered table-striped" id="tableBuyFabric">
-            <thead>
-            <tr align="center">
-                <th>Factory name</th>
-                <th>Price</th>
-                <th class="unnecessaryLine">Upgrade costs</th>
-                <th>Mining per second</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody data-bind="foreach: fabrics">
-            <tr align="center">
-                <td data-bind="text: fabricName"></td>
-                <td data-bind="text: price"></td>
-                <td class="unnecessaryLine" data-bind="text: upgrade"></td>
-                <td data-bind="text: miningPerSecond"></td>
-                <td>
-                    <button class="btn btn-primary btn-sm" data-bind="click: $parent.buyFabric">Buy
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <span>Silver - <span class="info" data-bind="text: silverBalance"></span></span>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <span>Gold -  <span class="info" data-bind="text: goldBalance, textInput: goldBalance"></span></span>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <span>Increase - <span class="info" data-bind="text: increase"></span></span>
+        </div>
     </div>
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 col-sm-12">
+            <div class="content">
+                <h3 align="center">Fabrics ich you can bay</h3>
+                <table class="table table-bordered table-striped" id="tableBuyFabric">
+                    <thead>
+                    <tr align="center">
+                        <th>Factory name</th>
+                        <th>Price</th>
+                        <th class="unnecessaryLine">Upgrade costs</th>
+                        <th>Mining per second</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach: fabrics">
+                    <tr align="center">
+                        <td data-bind="text: fabricName"></td>
+                        <td data-bind="text: price"></td>
+                        <td class="unnecessaryLine" data-bind="text: upgrade"></td>
+                        <td data-bind="text: miningPerSecond"></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" data-bind="click: $parent.buyFabric">Buy
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-4 offset-lg-0 col-sm-8 offset-sm-2">
+            <div class="sidebar">
+
+                <hr>
+                <h4 class="text-center">Leader list</h4>
+                <hr>
+                <table class="table table-bordered table-striped mt-4">
+                    <thead>
+                    <tr>
+                        <th>User name</th>
+                        <th>Silver balance</th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach: usersInfo">
+                    <tr>
+                        <td data-bind="text: name"></td>
+                        <td data-bind="text: silverBalance"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalPay" aria-hidden="true" class="modal fade">
     <div class="modal-dialog" role="document">
@@ -138,7 +121,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">You have become the owner of a new plant. Information about your factories is on the
+            <div class="modal-body">You have become the owner of a new plant. Information about your factories is on
+                the
                 main page.
             </div>
             <div class="modal-footer">
@@ -147,6 +131,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 </html>
